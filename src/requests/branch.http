@@ -1,0 +1,49 @@
+
+@baseUrl = http://localhost:3000/api/v1/
+
+# @name getBranches
+GET {{baseUrl}}/notification?staffCadre=salesPerson HTTP/1.1
+
+###
+
+
+# @name createBranch
+POST {{baseUrl}}/branch HTTP/1.1
+Content-Type: "application/json"
+
+{
+  "companyId": "e70d795d-dbca-422d-bb30-9953fb8aca78",
+  "state": "Lagos",
+  "lga": "Alimosho",
+  "name": "Alimosho Branch",
+  "code": "Kel-Ali-001",
+  "phoneNumber": "09086786547",
+  "email": "alimosho-kelwaram@gmail.com",
+  "address": "test-Branch address"
+}
+
+###
+
+# @name getBranches
+GET {{baseUrl}}/branch HTTP/1.1
+
+###
+@branchId = 939dfd7d-ea5e-46a0-994c-46815c9f892b
+
+# @name getBranch
+GET {{baseUrl}}/branch/{{branchId}} HTTP/1.1
+
+###
+
+# @name updateBranch
+PATCH  {{baseUrl}}/branch/{{branchId}} HTTP/1.1
+Content-Type: "application/json"
+
+{
+  "code": "test-code-updated"
+}
+
+###
+
+# @name deleteCompany
+DELETE  {{baseUrl}}/branch/{{branchId}}

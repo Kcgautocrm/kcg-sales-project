@@ -1,0 +1,42 @@
+
+@baseUrl = http://localhost:3000/api/v1/
+
+# @name getProducts
+GET {{baseUrl}}/product HTTP/1.1
+
+###
+
+
+# @name createProduct
+POST {{baseUrl}}/product HTTP/1.1
+Content-Type: "application/json"
+
+{
+  "code": "mercedes-code-001",
+  "name": "mercedes product",
+  "brandId": "47171e26-4d51-4aa7-9fd3-210e1a5e1532",
+  "description": "mercedes product description",
+  "specifications": "specification for mercedes product"
+}
+
+###
+
+@productId = 939dfd7d-ea5e-46a0-994c-46815c9f892b
+
+# @name getProduct
+GET {{baseUrl}}/product/{{productId}} HTTP/1.1
+
+###
+
+# @name updateProduct
+PATCH  {{baseUrl}}/product/{{productId}} HTTP/1.1
+Content-Type: "application/json"
+
+{
+  "code": "test-code-updated"
+}
+
+###
+
+# @name deleteProduct
+DELETE  {{baseUrl}}/product/{{productId}}

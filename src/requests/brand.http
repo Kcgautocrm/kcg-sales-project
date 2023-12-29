@@ -1,0 +1,42 @@
+
+@baseUrl = http://localhost:3000/api/v1/
+
+# @name getBrands
+GET {{baseUrl}}/brand HTTP/1.1
+
+###
+
+
+# @name createBrand
+POST {{baseUrl}}/brand HTTP/1.1
+Content-Type: "application/json"
+
+{
+  "code": "test-code",
+  "name": "test-brand-name",
+  "email": "test-email@gmail.com",
+  "address": "test-brand address",
+  "logo": ""
+}
+
+###
+
+@brandId = 939dfd7d-ea5e-46a0-994c-46815c9f892b
+
+# @name getBrand
+GET {{baseUrl}}/brand/{{brandId}} HTTP/1.1
+
+###
+
+# @name updateBrand
+PATCH  {{baseUrl}}/brand/{{brandId}} HTTP/1.1
+Content-Type: "application/json"
+
+{
+  "code": "test-code-updated"
+}
+
+###
+
+# @name deleteBrand
+DELETE  {{baseUrl}}/brand/{{brandId}}

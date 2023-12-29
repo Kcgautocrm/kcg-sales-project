@@ -1,0 +1,7 @@
+{
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(insidePages)/page": "app/(insidePages)/page.js",
+  "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
+  "/api/v1/notification/route": "app/api/v1/notification/route.js",
+  "/(insidePages)/pfiRequests/[id]/page": "app/(insidePages)/pfiRequests/[id]/page.js"
+}
