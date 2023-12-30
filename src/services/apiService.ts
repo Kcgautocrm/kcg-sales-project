@@ -6,9 +6,6 @@ import { getToken, deleteToken, getFingerprint } from "./localStorageService";
 //local base Url
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// production baseUrl
-// const baseUrl = `https://kcg-sales-project.vercel.app/api/v1`
-
 function setHeaders(extraHeaders: any) {
   let token = getToken();
   let fingerprint = getFingerprint();

@@ -106,7 +106,7 @@ const Layout = ({ children }) => {
           </nav>
         </header>
 
-        {/* isAllowed && */ children}
+        {isAllowed && children}
       </main>
       <AppNotifications />
     </div>

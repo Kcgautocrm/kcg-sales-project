@@ -7,14 +7,14 @@ import authService from "@/services/authService";
 let routeName = "Brand"
 export async function GET(request: Request) {
   try {
-    /* const token = (request.headers.get("Authorization") || "").split("Bearer ").at(1) as string;
+    const token = (request.headers.get("Authorization") || "").split("Bearer ").at(1) as string;
     let {isAuthorized} = await authService(token, ["admin", "supervisor", "salesPerson"])
     if(!isAuthorized){
       return new NextResponse(JSON.stringify({ message: `UnAuthorized`, data: null}), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       }); 
-    } */
+    }
 
     const { searchParams } = new URL(request.url);
     
@@ -83,14 +83,14 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    /* const token = (request.headers.get("Authorization") || "").split("Bearer ").at(1) as string;
+    const token = (request.headers.get("Authorization") || "").split("Bearer ").at(1) as string;
     let {isAuthorized} = await authService(token, ["admin"])
     if(!isAuthorized){
       return new NextResponse(JSON.stringify({ message: `UnAuthorized`, data: null}), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       }); 
-    } */
+    }
 
 
     let result;
