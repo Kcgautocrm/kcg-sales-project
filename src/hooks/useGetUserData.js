@@ -46,7 +46,7 @@ const useGetUserData = () => {
             return router.push("/")
         }
         if (!data?.staffCadre?.length && pathName !== ("/login" || "/forgotPassword" || "/resetPassword")) {
-            return router.push("/login")
+            // return router.push("/login")
         }
         if (data?.staffCadre?.length) {
             let restrictedRoutes = prohibitedRoutes()[data?.staffCadre[0]]
