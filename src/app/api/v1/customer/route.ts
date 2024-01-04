@@ -15,7 +15,6 @@ export async function GET(request: Request) {
       }); 
     }
 
-
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || "1");
     const take = parseInt(searchParams.get('take') || "");
@@ -99,7 +98,6 @@ export async function POST(request: Request) {
       }); 
     }
 
-
     const json = await request.json();
     let {employeeId, companyName, state, lga, city, address, companyWebsite, industry, customerType, enquirySource, name, designation, phoneNumber, email} = json
     // validate data here
@@ -111,9 +109,21 @@ export async function POST(request: Request) {
         data: {employeeId, customerId: data.id, name, designation, phoneNumber, email}
       })
     }
-    await prisma.notification.create({
-      data: {title: "Customer", staffCadre: "admin", resourceUrl: `/customers/${data.id}`, message: "New customer created (pending approval)" }
+
+    const employeeDetails = await prisma.employee.findUnique({ 
+      where: {id: data.employeeId}
     })
+    // notify admin
+    await prisma.notification.create({
+      data: {title: "Customer", staffCadre: "admin", resourceUrl: `/customers/${data.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName} created a new customer (pending approval)` }
+    })
+    // notify supervisor
+    if(employeeDetails?.supervisorId){
+      await prisma.notification.create({
+        data: {title: "Customer", receiverId: employeeDetails?.supervisorId, resourceUrl: `/customers/${data.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName} created a new customer` }
+      })
+    }
+
     return new NextResponse(JSON.stringify({ message: `${routeName} Created successfully`, data }), { 
      status: 201, 
      headers: { "Content-Type": "application/json" },

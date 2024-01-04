@@ -194,7 +194,7 @@ const CustomerDetails = () => {
   }) 
 
   const approveCustomer = useMutation({
-    mutationFn: () => apiPatch({ url: `/customer/${id}`, data: {approved: true}})
+    mutationFn: () => apiPatch({ url: `/customer/${id}?action=approve`, data: {approved: true}})
     .then(res =>{
       console.log(res.data)
       dispatchMessage({ message: "Customer approved successfully"})
@@ -207,7 +207,7 @@ const CustomerDetails = () => {
   }) 
 
   const disApproveCustomer = useMutation({
-    mutationFn: () => apiPatch({ url: `/customer/${id}`, data: {approved: false}})
+    mutationFn: () => apiPatch({ url: `/customer/${id}?action=disapprove`, data: {approved: false}})
     .then(res =>{
       console.log(res.data)
       dispatchMessage({ message: "Customer disapproved successfully"})

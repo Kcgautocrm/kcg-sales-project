@@ -114,9 +114,22 @@ export async function POST(request: Request) {
     const data = await prisma.invoiceRequestForm.create({
       data: json,
     });
-    await prisma.notification.create({
-      data: {staffCadre: "admin", resourceUrl: `/invoiceRequests/${data.id}`, message: "New Invoice Request created (pending approval)" }
+
+
+    const employeeDetails = await prisma.employee.findUnique({ 
+      where: {id: data.employeeId}
     })
+    // notify admin
+    await prisma.notification.create({
+      data: {title: "Invoice Request", staffCadre: "admin", resourceUrl: `/invoiceRequests/${data.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName} created a new Invoice Request (pending approval)` }
+    })
+    // notify supervisor
+    if(employeeDetails?.supervisorId){
+      await prisma.notification.create({
+        data: {title: "Invoice Request", receiverId: employeeDetails?.supervisorId, resourceUrl: `/invoiceRequests/${data.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName} created a new Invoice Request` }
+      })
+    }
+
     return new NextResponse(JSON.stringify({ message: `${routeName} Created successfully`, data }), { 
      status: 201, 
      headers: { "Content-Type": "application/json" },

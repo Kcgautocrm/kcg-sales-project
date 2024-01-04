@@ -65,7 +65,8 @@ export async function PATCH(
       }); 
     }
 
-
+    const { searchParams } = new URL(request.url);
+    const action = searchParams.get('action') ;
     const id = params.id;
     let json = await request.json();
 
@@ -78,22 +79,34 @@ export async function PATCH(
       data: json,
     });
 
-    if(!prevData?.approved && json?.approved){
+    const employeeDetails = await prisma.employee.findUnique({ where: {
+      id: updatedData.employeeId
+    }})
+    if(prevData?.approved === false && json?.approved === true){
+      // notify salesPerson
       await prisma.notification.create({
         data: { title: "Pfi Request", receiverId: updatedData.employeeId, resourceUrl: `/pfiRequests/${id}`, message: `Pfi with reference number: ${updatedData.pfiReferenceNumber} has been approved`}
       })
+      // notify supervisor
+      if(employeeDetails?.supervisorId){
+        await prisma.notification.create({
+          data: { title: "Pfi Request", receiverId: employeeDetails?.supervisorId, resourceUrl: `/pfiRequests/${updatedData.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}'s Pfi with reference number: ${updatedData.pfiReferenceNumber} has been approved` }
+        })
+      }
+
     }
 
-    if(!prevData?.locked && json?.locked){
+    if(action === "lock"){
+      // notify admin
       await prisma.notification.create({
-        data: { title: "Pfi Request", staffCadre: "admin", resourceUrl: `/pfiRequests/${id}`, message: `New Pfi Request has been sent for approval`}
+        data: { title: "Pfi Request", staffCadre: "admin", resourceUrl: `/pfiRequests/${id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName} sent Pfi Request for approval`}
       })
     }
 
-    if(!json?.locked && prevData?.locked){
-      let pfiDetails = await prisma.pfiRequestForm.findUnique({where: {id}});
+    if(action === "unlock"){
+      // notify salesPerson
       await prisma.notification.create({
-        data: { title: "Pfi Request", receiverId: pfiDetails?.employeeId, resourceUrl: `/pfiRequests/${id}`, message: `Pfi Request has been unlocked by admin`}
+        data: { title: "Pfi Request", receiverId: updatedData?.employeeId, resourceUrl: `/pfiRequests/${id}`, message: `Your Pfi Request has been unlocked by admin`}
       })
     }
 

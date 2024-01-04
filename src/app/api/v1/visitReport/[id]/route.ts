@@ -78,6 +78,10 @@ export async function PATCH(
 
     const id = params.id;
     let json = await request.json();
+
+    const previousData = await prisma.visitReport.findUnique({
+      where: { id }
+    })
   
     const updatedData: any = await prisma.visitReport.update({
       where: { id },
@@ -122,6 +126,29 @@ export async function PATCH(
         data: {lastVisited: json.visitDate}
       })
     }
+
+    // check if new follow up visit was added
+    // if so, notify admin and supervisor
+    if(previousData?.employeeId ){
+      const employeeDetails = await prisma.employee.findUnique({ where: {
+        id: previousData.employeeId
+      }})
+      if (updatedData?.followUpVisits.length > previousData?.followUpVisits.length) {
+        // notify admin
+        await prisma.notification.create({
+          data: { staffCadre: "admin", resourceUrl: `/visits/${previousData.customerId}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}- added a follow-up visit` }
+        })
+        // notify supervisor
+        if (employeeDetails?.supervisorId) {
+          await prisma.notification.create({
+            data: { receiverId: employeeDetails?.supervisorId, resourceUrl: `/visits/${previousData.customerId}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}- added a follow-up visit` }
+          })
+        }
+      }
+    }
+    
+
+    
     
   
     if (!updatedData) {

@@ -65,7 +65,6 @@ export async function PATCH(
         headers: { "Content-Type": "application/json" },
       }); 
     }
-
     const id = params.id;
     let json = await request.json();
   
@@ -75,10 +74,21 @@ export async function PATCH(
     });
 
     if(json.approved){
-      await prisma.notification.create({
-        data: {receiverId: updatedData.employeeId, resourceUrl: `/invoiceRequests/${updatedData.id}`, message: `Invoice Request has been approved`}
+      const employeeDetails = await prisma.employee.findUnique({ 
+        where: {id: updatedData.employeeId}
       })
+      // notify salesPerson
+      await prisma.notification.create({
+        data: {title: "Invoice Request", receiverId: updatedData.employeeId, resourceUrl: `/invoiceRequests/${updatedData.id}`, message: `Your Invoice request has been approved` }
+      })
+      // notify supervisor
+      if(employeeDetails?.supervisorId){
+        await prisma.notification.create({
+          data: {title: "Invoice Request", receiverId: employeeDetails?.supervisorId, resourceUrl: `/invoiceRequests/${updatedData.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}'s Invoice request has been approved` }
+        })
+      }
     }
+    
   
     if (!updatedData) {
       return new NextResponse(JSON.stringify({message: `${modelName} with ID not found`}), {

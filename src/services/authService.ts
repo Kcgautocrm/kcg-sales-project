@@ -29,7 +29,7 @@ const authService = async (token: string, staffCadreList: string[]) =>{
   if(staffCadreList.includes(decoded?.staffCadre[0])){
     isAuthorized = true
   }
-  return {isAuthorized, staffCadre: decoded?.staffCadre[0]}
+  return {isAuthorized, staffCadre: decoded?.staffCadre[0], fullname: `${decoded.firstName} ${decoded.lastName}`}
 }
 
 export default authService;

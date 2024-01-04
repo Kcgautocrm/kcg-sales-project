@@ -192,7 +192,7 @@ const PfiRequestDetails = () => {
   }
 
   const { isLoading: isLoadingLockPfi, mutate: lockPfiRequest } = useMutation({
-    mutationFn: () => apiPatch({ url: `/pfiRequestForm/${data.id}`, data: {locked: true} })
+    mutationFn: () => apiPatch({ url: `/pfiRequestForm/${data.id}?action=lock`, data: {locked: true} })
       .then(res => {
         console.log(res.data)
         refreshPfiDetails();
@@ -202,6 +202,21 @@ const PfiRequestDetails = () => {
         console.log(error)
         dispatchMessage({ severity: "error", message: error.message })
         lockPfiModalRef.current.click();
+      }),
+  })
+
+  const { isLoading: isUnlockingPfi, mutate: unLockPfiRequest } = useMutation({
+    mutationFn: () => apiPatch({ url: `/pfiRequestForm/${data?.id}?action=unlock`, data: {locked: false, approved: false} })
+      .then(res => {
+        console.log(res.data)
+        dispatchMessage({ message: "Pfi has been unlocked" });
+        refreshPfiDetails();
+        unlockPfiModalRef.current.click()
+      })
+      .catch(error => {
+        console.log(error)
+        dispatchMessage({ severity: "error", message: error.message })
+        unlockPfiModalRef.current.click()
       }),
   })
 
@@ -220,20 +235,7 @@ const PfiRequestDetails = () => {
       }),
   })
 
-  const { isLoading: isUnlockingPfi, mutate: unLockPfiRequest } = useMutation({
-    mutationFn: () => apiPatch({ url: `/pfiRequestForm/${data?.id}`, data: {locked: false, approved: false} })
-      .then(res => {
-        console.log(res.data)
-        dispatchMessage({ message: "Pfi has been unlocked" });
-        refreshPfiDetails();
-        unlockPfiModalRef.current.click()
-      })
-      .catch(error => {
-        console.log(error)
-        dispatchMessage({ severity: "error", message: error.message })
-        unlockPfiModalRef.current.click()
-      }),
-  })
+
 
 
   const {mutate: deletePfi, isLoading: isDeletingPfi} = useMutation({

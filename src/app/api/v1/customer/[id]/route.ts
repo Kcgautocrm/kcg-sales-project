@@ -63,7 +63,8 @@ export async function PATCH(
       }); 
     }
 
-
+    const { searchParams } = new URL(request.url);
+    const action = searchParams.get('action');
     const id = params.id;
     let json = await request.json();
 
@@ -71,16 +72,15 @@ export async function PATCH(
       where: { id },
       data: json,
     });
-    if(json.approved){
+    if(action === "approve"){
       await prisma.notification.create({
-        data: {receiverId: updatedData.employeeId, resourceUrl: `/customers/${updatedData.id}`, message: `${updatedData.companyName} has been approved as your customer`}
+        data: { title: "Customer", receiverId: updatedData.employeeId, resourceUrl: `/customers/${updatedData.id}`, message: `${updatedData.companyName} has been approved as your customer`}
       })
-    }/* else{
+    }else if( action === "disapprove"){
       await prisma.notification.create({
-        data: {receiverId: updatedData.employeeId, resourceUrl: `/customers/${updatedData.id}`, message: `${updatedData.companyName} Customer details was edited`}
+        data: { title: "Customer", receiverId: updatedData.employeeId, resourceUrl: `/customers/${updatedData.id}`, message: `${updatedData.companyName} has been dissaproved as your customer`}
       })
-    } */
-
+    }
 
     if (!updatedData) {
       return new NextResponse(JSON.stringify({message: `${modelName} with ID not found`}), {

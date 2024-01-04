@@ -116,6 +116,20 @@ export async function POST(request: Request) {
     const data = await prisma.visitReport.create({
       data: json,
     });
+    const employeeDetails = await prisma.employee.findUnique({ where: {
+      id: data.employeeId
+    }})
+
+    // notify admin
+    await prisma.notification.create({
+      data: {staffCadre: "admin", resourceUrl: `/visits/${data.customerId}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}- created a visit report` }
+    })
+    // notify supervisor
+    if(employeeDetails?.supervisorId){
+      await prisma.notification.create({
+        data: {receiverId: employeeDetails?.supervisorId, resourceUrl: `/visits/${data.customerId}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}- created a visit report` }
+      })
+    }
 
     // update last visited in customer model
     await prisma.customer.update({

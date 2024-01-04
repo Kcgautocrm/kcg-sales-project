@@ -35,7 +35,6 @@ const Layout = ({ children }) => {
       <aside className="left-sidebar">
         <AsideContent />
       </aside>
-
       <main className="body-wrapper">
 
         <header className="app-header">

@@ -1,4 +1,4 @@
-// File: /Users/ajayiadeyemi/Desktop/projects/kcg-sales-project/src/app/(insidePages)/layout.js
+// File: /Users/ajayiadeyemi/Desktop/projects/kcg-sales-project-2/src/app/(insidePages)/layout.js
 import * as entry from '../../../../src/app/(insidePages)/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

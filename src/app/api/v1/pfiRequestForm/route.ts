@@ -135,9 +135,22 @@ export async function POST(request: Request) {
     const data = await prisma.pfiRequestForm.create({
       data: json,
     });
+
+    const employeeDetails = await prisma.employee.findUnique({ where: {
+      id: data.employeeId
+    }})
+
+    // notify admin
     await prisma.notification.create({
-      data: {staffCadre: "admin", resourceUrl: `/pfiRequests/${data.id}`, message: "New Pfi Request created (pending approval)" }
+      data: {staffCadre: "admin", resourceUrl: `/pfiRequests/${data.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}- created a Pfi Request` }
     })
+    // notify supervisor
+    if(employeeDetails?.supervisorId){
+      await prisma.notification.create({
+        data: {receiverId: employeeDetails?.supervisorId, resourceUrl: `/pfiRequests/${data.id}`, message: `${employeeDetails?.firstName} ${employeeDetails?.lastName}- created a Pfi Request` }
+      })
+    }
+
     return new NextResponse(JSON.stringify({ message: `${routeName} Created successfully`, data }), { 
      status: 201, 
      headers: { "Content-Type": "application/json" },

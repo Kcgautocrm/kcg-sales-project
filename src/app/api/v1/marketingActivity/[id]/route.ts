@@ -18,7 +18,6 @@ export async function GET(
       }); 
     }
 
-
     const id = params.id;
     const data = await prisma.markettingActivity.findUnique({
       where: {
@@ -94,7 +93,6 @@ export async function PATCH(
       headers: { "Content-Type": "application/json" },
     }); 
   }
-  
 }
 
 export async function DELETE(
