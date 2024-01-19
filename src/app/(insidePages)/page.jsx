@@ -173,29 +173,30 @@ export default function Home() {
   },[userData])
 
   const fetchPfiRequests = ()=>{
-    let startDate = new Date(moment(pfiRequestMonth).startOf("month")).toISOString();
-    let endDate = new Date(moment(pfiRequestMonth).endOf("month")).toISOString();
+    let startDate = new Date(moment(pfiRequestMonth, 'YYYY-MMM')?.startOf("month"))?.toISOString();
+    let endDate = new Date(moment(pfiRequestMonth, 'YYYY-MMM')?.endOf("month"))?.toISOString();
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`;
     pfiRequestQuery.mutate(searchParams);
   }
 
   const fetchinvoiceRequests = ()=>{
-    let startDate = new Date(moment(invoiceRequestMonth).startOf("month")).toISOString();
-    let endDate = new Date(moment(invoiceRequestMonth).endOf("month")).toISOString();
+    let startDate = new Date(moment(invoiceRequestMonth, 'YYYY-MMM').startOf("month")).toISOString();
+    let endDate = new Date(moment(invoiceRequestMonth, 'YYYY-MMM').endOf("month")).toISOString();
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`;
     invoiceRequestQuery.mutate(searchParams);
   }
 
   const fetchAchievements = ()=>{
-    let startDate = new Date(moment(achievementMonth).startOf("month")).toISOString();
-    let endDate = new Date(moment(achievementMonth).endOf("month")).toISOString();
+    let startDate = new Date(moment(achievementMonth, 'YYYY-MMM').startOf("month")).toISOString();
+    let endDate = new Date(moment(achievementMonth, 'YYYY-MMM').endOf("month")).toISOString();
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}&month=${achievementMonth}`;
     achievementQuery.mutate(searchParams);
   }
 
   const fetchCustomerVisits = ()=>{
-    let startDate = new Date(moment(customerVisitDate).startOf("day")).getTime();
-    let endDate = new Date(moment(customerVisitDate).endOf("day")).getTime();
+    console.log(customerVisitDate)
+    let startDate = new Date(moment(customerVisitDate, 'YYYY-MMM-DD').startOf("day")).getTime();
+    let endDate = new Date(moment(customerVisitDate, 'YYYY-MMM-DD').endOf("day")).getTime();
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`;
     customerVisitQuery.mutate(searchParams);
   }

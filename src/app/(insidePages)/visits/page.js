@@ -95,30 +95,6 @@ const VisitReports = () => {
     }))
   }
 
-  /* useEffect(() => {
-    if (userData?.staffCadre?.includes("salesPerson")) {
-      setFormData(prevState => ({
-        ...prevState,
-        employeeId: userData?.id
-      }))
-    }
-  }, [userData])
-
-  const generateQueryString = () => {
-    let queryString = ""
-    let data = formData;
-    let dataKeys = Object.keys(data);
-    dataKeys.forEach(key => {
-      if (data[key]) {
-        if (queryString === "") {
-          queryString += `${key}=${data[key]}`
-        } else {
-          queryString += `&${key}=${data[key]}`
-        }
-      }
-    })
-    return queryString
-  } */
 
   const employeeQuery = useQuery({
     queryKey: ["allEmployees"],
@@ -216,6 +192,20 @@ const VisitReports = () => {
     }
   }
 
+  const deriveLastVisit = (data) =>{
+    let lastVisits = [];
+    data.visitReports.forEach( item =>{
+      if(item.followUpVisits.length){
+        lastVisits.push(new Date(item.followUpVisits[item.followUpVisits.length - 1].meetingDate).getTime())
+      }else{
+        lastVisits.push(new Date(item.visitDate).getTime())
+      }
+    })
+    console.log(`${data?.companyName}:`, lastVisits, Math.max(...lastVisits))
+    return Math.max(...lastVisits)
+    
+  }
+
 
   const listVisitReports = () => {
     let eligibleVisitReports = allVisitReports.filter( item => item?._count?.visitReports > 0);
@@ -235,7 +225,7 @@ const VisitReports = () => {
             <p className="mb-0 fw-normal">{item.industry}</p>
           </td>
           <td className="border-bottom-0">
-            <p className="small mb-0 d-flex flex-wrap" style={{ maxWidth: "200px" }}>{new Date(item.lastVisited).toDateString()}</p>
+            <p className="small mb-0 d-flex flex-wrap" style={{ maxWidth: "200px" }}>{new Date(deriveLastVisit(item)).toDateString()}</p>
           </td>
           {userData?.staffCadre?.includes("admin") && 
           <td className="border-bottom-0">

@@ -9,7 +9,7 @@ const ChangePassword = () =>{
   const dispatchMessage = useDispatchMessage();
   const router = useRouter();
   const [formData, setFormData] = useState({
-    oldPassword: "",
+    //oldPassword: "",
     newPassword: "",
     confirmPassword: ""
   })
@@ -35,6 +35,12 @@ const ChangePassword = () =>{
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(formData.newPassword.trim().length < 8){
+      return dispatchMessage({severity: "error", message: "passwords must be at least 8 characters"})
+    }
+    if(formData.newPassword !== formData.confirmPassword){
+      return dispatchMessage({severity: "error", message: "passwords do not match"})
+    }
     console.log(formData);
     mutate();
   }
@@ -49,10 +55,10 @@ const ChangePassword = () =>{
       </header>
 
       <form>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="oldPassword" className="form-label">Password</label>
           <input type="text" className="form-control" id="oldPassword" value={formData.oldPassword} onChange={handleChange("oldPassword")} />
-        </div>
+        </div> */}
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">New Password</label>
           <input type="text" className="form-control" id="newPassword" value={formData.newPassword} onChange={handleChange("newPassword")} />

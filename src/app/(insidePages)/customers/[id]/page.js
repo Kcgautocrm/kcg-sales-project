@@ -344,9 +344,9 @@ const CustomerDetails = () => {
         <h4 className="m-0">Customer</h4>
         
         <span className="breadcrumb-item ms-3"><a href="/customers"><i className="fa-solid fa-arrow-left me-1"></i> Back</a></span>
-        {(userData?.staffCadre?.includes("salesPerson") && userData?.accountType !== "Supervisor" ) && <a className={`btn btn-link text-primary ms-auto`} onClick={()=>setCurrentForm("addContactPerson")}>Add Contact Person</a>}
-        {(userData?.staffCadre?.includes("salesPerson") && userData?.accountType !== "Supervisor" && !data?.approved ) && <a className="btn btn-link text-primary" href={`/customers/${id}/edit`}>Edit</a>}
-        {userData?.staffCadre?.includes("admin")  && <a className="btn btn-link text-danger ms-auto" data-bs-toggle="modal" data-bs-target="#deleteCustomer">Delete</a>}
+        {(userData?.id === data?.employeeId) && <a className={`btn btn-link text-primary ms-auto`} onClick={()=>setCurrentForm("addContactPerson")}>Add Contact Person</a>}
+        {userData?.id === data?.employeeId && (!data?.approved) && <a className="btn btn-link text-primary" href={`/customers/${id}/edit`}>Edit</a>}
+        {(userData?.staffCadre?.includes("admin")) && <a className="btn btn-link text-danger ms-auto" data-bs-toggle="modal" data-bs-target="#deleteCustomer">Delete</a>}
       </header>
 
 

@@ -142,9 +142,9 @@ model Customer {
   industry            String?              @db.VarChar(50)
   customerType        String?              @db.VarChar(50)
   enquirySource       String?              @db.VarChar(50)
-  status              String?              @default("cold") @db.VarChar(50)
+  status              String?              
   approved            Boolean              @default(false)
-  lastVisited         String               @default("No Visit")
+  lastVisited         String?              
   contactPersons      ContactPerson[]
   visitReports        VisitReport[]
   pfiRequestForms     PfiRequestForm[]

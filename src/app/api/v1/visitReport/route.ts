@@ -53,6 +53,17 @@ export async function GET(request: Request) {
       }),
       include: {
         employee: true,
+        visitReports: {
+          select: {
+            visitDate: true,
+            nextVisitDate: true,
+            followUpVisits: true,
+            updatedAt: true
+          },
+          orderBy: {
+            updatedAt: "desc"
+          }
+        },
         _count: {
           select: {visitReports: true}
         }
@@ -132,12 +143,12 @@ export async function POST(request: Request) {
     }
 
     // update last visited in customer model
-    await prisma.customer.update({
+    /* await prisma.customer.update({
       where: {
         id: json.customerId
       },
       data: {lastVisited: json.visitDate}
-    })
+    }) */
     return new NextResponse(JSON.stringify({ message: `${routeName} Created successfully`, data }), { 
      status: 201, 
      headers: { "Content-Type": "application/json" },

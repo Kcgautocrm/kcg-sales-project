@@ -4,7 +4,7 @@ import useGetComments from '@/hooks/useGetComments';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, useRef } from "react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { apiGet, apiPatch, apiPost } from "@/services/apiService";
+import { apiDelete, apiGet, apiPatch, apiPost } from "@/services/apiService";
 import { useParams } from 'next/navigation';
 import useDispatchMessage from "@/hooks/useDispatchMessage";
 import { useSelector } from 'react-redux';
@@ -61,6 +61,7 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
   const dispatchMessage = useDispatchMessage();
   const nextVisitDateRef = useRef();
   const nextVisitTimeRef = useRef();
+  const deleteVisitReportRef = useRef();
   
 
   const followUpVisitMutation = useMutation({
@@ -76,16 +77,18 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
       }),
   })
 
-  const visitReportMutation = useMutation({
-    mutationFn: () => apiPatch({ url: `/visitReport/${item.id}`, data: {isActive: false}})
+  const deleteVisitReport = useMutation({
+    mutationFn: () => apiDelete({ url: `/visitReport/${item.id}`})
     .then(res =>{
       console.log(res.data)
       dispatchMessage({ message: "Visit Report deleted successfully"})
       refetchVisitReport();
+      deleteVisitReportRef.current.click()
     })
     .catch(error =>{
       console.log(error.message)
       dispatchMessage({ severity: "error", message: error.message})
+      deleteVisitReportRef.current.click()
     })
   }) 
 
@@ -158,7 +161,7 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
           <td className="border-bottom-0">
             <p className="mb-0 fw-normal">{moment(nextVisitDate).format('MMMM Do YYYY, h:mm:ss a')}</p>
           </td>
-          {(userData?.staffCadre?.includes("salesPerson") && !userData?.staffCadre?.includes("supervisor")) &&
+          {(userData?.id === item?.employeeId || userData?.staffCadre?.includes("admin")) &&
           <td className="border-bottom-0">
             <DeleteFollowUpButton isLoading={followUpVisitMutation.isLoading} deleteFunc={()=>deleteFollowUpVisit(id)} id={id} />
           </td>}
@@ -308,12 +311,12 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
         </button>
       </h2>
       <div id={item.id} className="accordion-collapse collapse" data-bs-parent="#accordionExample">
-        <div className="accordion-body">
-          <div className="d-flex">
-            {(userData?.id === item?.employeeId ) && 
+        <div className="accordion-body d-flex flex-column">
+          <div className="d-inline-flex ms-auto">
+            {(userData?.id === item?.employeeId) && 
             <button className="btn btn-link text-primary ms-auto" onClick={() => setShowFollowUpVisitForm(prevState => !prevState)} >Add Follow-up visit</button>}
             {userData?.id === item.employeeId && <a className="btn btn-link text-primary ms-2" href={`/visits/${item.id}/edit`}>Edit</a>}
-            {userData?.id === item.employeeId && <a className="btn btn-link text-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteVisitReport">Delete</a>}
+            {(userData?.id === item.employeeId || userData?.staffCadre?.includes("admin")) && <a className="btn btn-link text-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteVisitReport">Delete</a>}
           </div>
 
           {showFollowUpVisitForm && <div className="card w-100">
@@ -451,7 +454,7 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
         </div>
       </div>
 
-      <ConfirmationModal title="Delete Visit Report" message="Are you sure your want to delete this visit report? This action cannot be reversed." isLoading={visitReportMutation.isLoading} onSubmit={visitReportMutation.mutate} id="deleteVisitReport" btnColor="danger" />
+      <ConfirmationModal title="Delete Visit Report" message="Are you sure your want to delete this visit report? This action cannot be reversed." isLoading={deleteVisitReport.isLoading} onSubmit={deleteVisitReport.mutate} id="deleteVisitReport" btnColor="danger" closeButtonRef={deleteVisitReportRef} />
     </div>
   )
 }

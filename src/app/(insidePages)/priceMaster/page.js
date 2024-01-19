@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import useGetUserData from "@/hooks/useGetUserData";
 import * as XLSX from 'xlsx';
+import { useEffect } from "react";
 
 
 
@@ -62,7 +63,7 @@ const PriceMaster = () =>{
 
 
 
-  const {data, isFetching} = useQuery({
+  const {data, isFetching, refetch} = useQuery({
     queryKey: ["allProductPrices" ],
     queryFn:  ()=>apiGet({ url: "/priceMaster"})
     .then(res => {
@@ -77,6 +78,10 @@ const PriceMaster = () =>{
     staleTime: Infinity,
     retry: 3
   })
+
+  useEffect(()=>{
+    refetch()
+  }, [])
 
   const deriveProductStatus = (unitPrice, promoPrice, validTill, anyPromo)=>{
     let validTillString = new Date(validTill).getTime();

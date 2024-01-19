@@ -100,14 +100,14 @@ export async function PATCH(
       let lastVisit = json?.followUpVisits[json?.followUpVisits?.length - 1];
       // check if lastVisit meeting Date is greater than customer last visited date
       let isLatestVisit = new Date(lastVisit.meetingDate).getTime() > new Date(customer?.lastVisited).getTime()
-      if(lastVisit && isLatestVisit){
+      /* if(lastVisit && isLatestVisit){
         await prisma.customer.update({
           where: {
             id: updatedData.customerId
           },
           data: {lastVisited: lastVisit?.meetingDate}
         })
-      }
+      } */
       // this is correct
       if(lastVisit?.nextVisitDate && new Date(lastVisit.nextVisitDate).getTime() > new Date(updatedData?.nextVisitDate).getTime()){
         await prisma.visitReport.update({
@@ -118,14 +118,14 @@ export async function PATCH(
         })
       }
     }
-    if(json?.visitDate && new Date(json?.visitDate).getTime() > new Date(customer?.lastVisited).getTime()){
+    /* if(json?.visitDate && new Date(json?.visitDate).getTime() > new Date(customer?.lastVisited).getTime()){
       await prisma.customer.update({
         where: {
           id: json?.customerId
         },
         data: {lastVisited: json.visitDate}
       })
-    }
+    } */
 
     // check if new follow up visit was added
     // if so, notify admin and supervisor
@@ -176,7 +176,7 @@ export async function DELETE(
 ) {
   try {
     const token = (request.headers.get("Authorization") || "").split("Bearer ").at(1) as string;
-    let {isAuthorized} = await authService(token, ["supervisor", "salesPerson"])
+    let {isAuthorized} = await authService(token, ["supervisor", "salesPerson", "admin"])
     if(!isAuthorized){
       return new NextResponse(JSON.stringify({ message: `UnAuthorized`, data: null}), {
         status: 401,
