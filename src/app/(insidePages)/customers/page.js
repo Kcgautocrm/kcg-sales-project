@@ -223,7 +223,7 @@ const Customers = () => {
 
   const allCustomersQuery = useQuery({
     queryKey: ["allCustomers-excel" ],
-    queryFn:  ()=>apiGet({ url: `/customer`})
+    queryFn:  ()=>apiGet({ url: `/customer/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

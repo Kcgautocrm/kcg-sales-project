@@ -201,9 +201,7 @@ const VisitReports = () => {
         lastVisits.push(new Date(item.visitDate).getTime())
       }
     })
-    console.log(`${data?.companyName}:`, lastVisits, Math.max(...lastVisits))
     return Math.max(...lastVisits)
-    
   }
 
 
@@ -238,7 +236,7 @@ const VisitReports = () => {
 
   const allVisitReportsQuery = useQuery({
     queryKey: ["allVisitReports-excel" ],
-    queryFn:  ()=>apiGet({ url: `/visitReport`})
+    queryFn:  ()=>apiGet({ url: `/visitReport/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

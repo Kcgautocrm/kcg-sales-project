@@ -156,7 +156,7 @@ const MonthlyTargets = () =>{
 
   const allTargetAchievementsQuery = useQuery({
     queryKey: ["allTargetAchievements-excel" ],
-    queryFn:  ()=>apiGet({ url: `/monthlyTarget`})
+    queryFn:  ()=>apiGet({ url: `/monthlyTarget/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

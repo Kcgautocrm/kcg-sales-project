@@ -363,7 +363,7 @@ const InvoiceRequests = () =>{
 
   const allInvoiceRequestsQuery = useQuery({
     queryKey: ["allInvoiceRequests-excel" ],
-    queryFn:  ()=>apiGet({ url: `/invoiceRequestForm`})
+    queryFn:  ()=>apiGet({ url: `/invoiceRequestForm/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

@@ -188,7 +188,7 @@ const Brands = () =>{
 
   const allBrandsQuery = useQuery({
     queryKey: ["allBrands-excel" ],
-    queryFn:  ()=>apiGet({ url: `/brand`})
+    queryFn:  ()=>apiGet({ url: `/brand/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

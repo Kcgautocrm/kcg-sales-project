@@ -354,7 +354,7 @@ const PfiRequests = () =>{
 
   const allPfiRequestsQuery = useQuery({
     queryKey: ["allPfiRequests-excel" ],
-    queryFn:  ()=>apiGet({ url: `/pfiRequestForm`})
+    queryFn:  ()=>apiGet({ url: `/pfiRequestForm/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

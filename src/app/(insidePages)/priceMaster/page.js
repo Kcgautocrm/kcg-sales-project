@@ -145,7 +145,7 @@ const PriceMaster = () =>{
 
   const allPriceMasterQuery = useQuery({
     queryKey: ["allPriceMaster-excel" ],
-    queryFn:  ()=>apiGet({ url: `/priceMaster`})
+    queryFn:  ()=>apiGet({ url: `/priceMaster/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

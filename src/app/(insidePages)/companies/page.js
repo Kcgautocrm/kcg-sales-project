@@ -191,7 +191,7 @@ const Companies = () =>{
 
   const allCompaniesQuery = useQuery({
     queryKey: ["allCompanies-excel" ],
-    queryFn:  ()=>apiGet({ url: `/company`})
+    queryFn:  ()=>apiGet({ url: `/company/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

@@ -233,7 +233,7 @@ const Products = () =>{
 
   const allProductsQuery = useQuery({
     queryKey: ["allProducts-excel" ],
-    queryFn:  ()=>apiGet({ url: `/product`})
+    queryFn:  ()=>apiGet({ url: `/product/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

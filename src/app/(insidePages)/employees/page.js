@@ -253,7 +253,7 @@ const Employees = () =>{
 
   const allEmployeesQuery = useQuery({
     queryKey: ["allEmployees-excel" ],
-    queryFn:  ()=>apiGet({ url: `/employee`})
+    queryFn:  ()=>apiGet({ url: `/employee/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)

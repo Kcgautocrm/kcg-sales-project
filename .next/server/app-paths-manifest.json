@@ -1,15 +1,8 @@
 {
-  "/api/v1/comment/route": "app/api/v1/comment/route.js",
   "/(insidePages)/visits/page": "app/(insidePages)/visits/page.js",
-  "/(insidePages)/customers/page": "app/(insidePages)/customers/page.js",
   "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
-  "/api/v1/employee/route": "app/api/v1/employee/route.js",
-  "/api/v1/pfiRequestForm/route": "app/api/v1/pfiRequestForm/route.js",
-  "/api/v1/contactPerson/route": "app/api/v1/contactPerson/route.js",
-  "/api/v1/customer/route": "app/api/v1/customer/route.js",
-  "/api/v1/product/route": "app/api/v1/product/route.js",
-  "/api/v1/brand/route": "app/api/v1/brand/route.js",
-  "/(insidePages)/pfiRequests/[id]/page": "app/(insidePages)/pfiRequests/[id]/page.js",
-  "/(insidePages)/visits/[id]/page": "app/(insidePages)/visits/[id]/page.js",
-  "/(insidePages)/customers/[id]/page": "app/(insidePages)/customers/[id]/page.js"
+  "/(insidePages)/invoiceRequests/page": "app/(insidePages)/invoiceRequests/page.js",
+  "/(insidePages)/marketingActivities/page": "app/(insidePages)/marketingActivities/page.js",
+  "/api/v1/invoiceRequestForm/route": "app/api/v1/invoiceRequestForm/route.js",
+  "/(insidePages)/targetAchievements/page": "app/(insidePages)/targetAchievements/page.js"
 }

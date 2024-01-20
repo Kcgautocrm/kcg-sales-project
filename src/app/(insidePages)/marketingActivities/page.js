@@ -229,7 +229,7 @@ const MarketingActivity = () => {
 
   const allMarketingActivitiesQuery = useQuery({
     queryKey: ["allMarketingActivities-excel" ],
-    queryFn:  ()=>apiGet({ url: `/marketingActivity`})
+    queryFn:  ()=>apiGet({ url: `/marketingActivity/excel`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)
