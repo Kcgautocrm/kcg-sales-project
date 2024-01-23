@@ -105,9 +105,10 @@ const VisitReportDetails = () => {
         dispatchMessage({ severity: "error", message: error.message })
         return []
       }),
-      staleTime: Infinity,
+      // staleTime: Infinity,
       retry: 3
   })
+
 
   const customerQuery = useQuery({
     queryKey: ["allCustomers", id],

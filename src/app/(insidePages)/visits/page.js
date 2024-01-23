@@ -11,6 +11,7 @@ import useGetUserData from "@/hooks/useGetUserData";
 import NaijaStates from 'naija-state-local-government';
 import ListOfSubordinates from "@/components/listOfSubordinates";
 import * as XLSX from 'xlsx';
+import moment from "moment";
 
 
 const LoadingFallBack = () => {
@@ -193,15 +194,22 @@ const VisitReports = () => {
   }
 
   const deriveLastVisit = (data) =>{
-    let lastVisits = [];
-    data.visitReports.forEach( item =>{
+    let lastVisit = "";
+    let lastReport = data.visitReports[0];
+    if(lastReport?.followUpVisits?.length){
+      lastVisit = lastReport.followUpVisits[lastReport.followUpVisits.length - 1].meetingDate
+    }else{
+      lastVisit = lastReport.visitDate
+    }
+    /* data.visitReports.forEach( item =>{
       if(item.followUpVisits.length){
-        lastVisits.push(new Date(item.followUpVisits[item.followUpVisits.length - 1].meetingDate).getTime())
+        lastVisit = item.followUpVisits[item.followUpVisits.length - 1].meetingDate
       }else{
-        lastVisits.push(new Date(item.visitDate).getTime())
+        lastVisit = item.visitDate
       }
-    })
-    return Math.max(...lastVisits)
+    }) */
+    console.log("last visit: ", lastVisit)
+    return lastVisit;
   }
 
 
@@ -223,7 +231,7 @@ const VisitReports = () => {
             <p className="mb-0 fw-normal">{item.industry}</p>
           </td>
           <td className="border-bottom-0">
-            <p className="small mb-0 d-flex flex-wrap" style={{ maxWidth: "200px" }}>{new Date(deriveLastVisit(item)).toDateString()}</p>
+            <p className="small mb-0 d-flex flex-wrap" style={{ maxWidth: "200px" }}>{moment(deriveLastVisit(item)).format('lll')}</p>
           </td>
           {userData?.staffCadre?.includes("admin") && 
           <td className="border-bottom-0">
