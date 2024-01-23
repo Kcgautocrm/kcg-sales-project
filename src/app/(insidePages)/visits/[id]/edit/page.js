@@ -257,8 +257,8 @@ const EditVisitReport = () => {
       return setErrors(errors);
     }
     let data = {...formData};
-    data.visitDate = `${data.visitDate}T${data.visitTime}`
-    data.nextVisitDate = `${data.nextVisitDate}T${data.nextVisitTime}`
+    data.visitDate = `${data.visitDate}${data.visitTime ? "T" + data.visitTime : ""}`
+    data.nextVisitDate = `${data.nextVisitDate}${data.nextVisitTime ? "T" + data.nextVisitTime : ""}`
     delete data.visitTime;
     delete data.nextVisitTime;
     mutate(data)

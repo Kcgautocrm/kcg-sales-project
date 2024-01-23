@@ -1,8 +1,5 @@
 {
-  "/(insidePages)/visits/page": "app/(insidePages)/visits/page.js",
-  "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
-  "/(insidePages)/invoiceRequests/page": "app/(insidePages)/invoiceRequests/page.js",
-  "/(insidePages)/marketingActivities/page": "app/(insidePages)/marketingActivities/page.js",
-  "/api/v1/invoiceRequestForm/route": "app/api/v1/invoiceRequestForm/route.js",
-  "/(insidePages)/targetAchievements/page": "app/(insidePages)/targetAchievements/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(insidePages)/page": "app/(insidePages)/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js"
 }

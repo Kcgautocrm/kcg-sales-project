@@ -382,7 +382,7 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
             <DataListItem title="Quantity" value={item?.quantity} />
             <DataListItem title="Duration Of Meeting" value={item?.durationOfMeeting} />
             <DataListItem title="Meeting Outcome" value={item?.meetingOutcome} />
-            <DataListItem title="Initial Visit Date" value={moment(item?.visitDate).format('MMMM Do YYYY, h:mm:ss a')} />
+            <DataListItem title="Initial Visit Date" value={moment(item?.visitDate).format('MMMM DD YYYY, h:mm:ss a')} />
             <DataListItem title="Pfi Request" value={item?.pfiRequest ? "Yes" : "No"} />
             <DataListItem title="Next Visit Date" value={moment(item?.nextVisitDate).format('MMMM Do YYYY, h:mm:ss a')} />
             <DataListItem title="Created On" value={moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss a')} />

@@ -207,17 +207,18 @@ const AddCustomerVisit = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // return console.log(formData)
+    
     let errors = formValidator(["customerId", "contactPersonId", "status", "durationOfMeeting", "productsDiscussed", "visitDate"], formData);
     if(Object.keys(errors).length){
       dispatchMessage({ severity: "error", message: "Some required fields are empty" })
       return setErrors(errors);
     }
     let data = {...formData};
-    data.visitDate = `${data.visitDate}T${data.visitTime}`
-    data.nextVisitDate = `${data.nextVisitDate}T${data.nextVisitTime}`
+    data.visitDate = `${data.visitDate}${data.visitTime ? "T" + data.visitTime : ""}`
+    data.nextVisitDate = `${data.nextVisitDate}${data.nextVisitTime ? "T" + data.nextVisitTime : ""}`
     delete data.visitTime;
     delete data.nextVisitTime;
+    //return console.log(data)
     mutate(data)
   }
 
