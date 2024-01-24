@@ -148,7 +148,7 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
         <tr key={id} className="hover">
           <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{index + 1}</h6></td>
           <td className="border-bottom-0">
-            <h6 className="fw-semibold mb-1">{new Date(meetingDate).toDateString()}</h6>
+            <h6 className="fw-semibold mb-1">{moment(cleanDateString(meetingDate)).format(cleanDateString(meetingDate).includes("T") ? "lll" : "ll")}</h6>
           </td>
           <td className="border-bottom-0">
             <p className="mb-0 fw-normal">{meetingDuration}</p>
@@ -159,7 +159,7 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
             </div>
           </td>
           <td className="border-bottom-0">
-            <p className="mb-0 fw-normal">{moment(nextVisitDate).format('MMMM Do YYYY, h:mm:ss a')}</p>
+            <p className="mb-0 fw-normal">{moment(cleanDateString(nextVisitDate)).format(cleanDateString(nextVisitDate).includes("T") ? "lll" : "ll")}</p>
           </td>
           {(userData?.id === item?.employeeId || userData?.staffCadre?.includes("admin")) &&
           <td className="border-bottom-0">
@@ -300,6 +300,13 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
     }
     //return console.log(data)
     sendEmailReminderMutation.mutate(data);
+
+    const cleanDateString = (date) =>{
+      if(date[date.length - 1] === "T"){
+        date = date.slice(0, -1);
+      }
+      return date;
+    }
   }
 
 
@@ -307,7 +314,8 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
     <div className="accordion-item my-3">
       <h2 className="accordion-header">
         <button className="accordion-button border" type="button" data-bs-toggle="collapse" data-bs-target={`#${item.id}`} aria-expanded="true" aria-controls={item.id}>
-          {new Date(item.visitDate).toDateString()}
+          {/* {new Date(item.visitDate).toDateString()} */}
+          {moment(cleanDateString(item.visitDate)).format(cleanDateString(item.visitDate).includes("T") ? "lll" : "ll")}
         </button>
       </h2>
       <div id={item.id} className="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -382,9 +390,9 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
             <DataListItem title="Quantity" value={item?.quantity} />
             <DataListItem title="Duration Of Meeting" value={item?.durationOfMeeting} />
             <DataListItem title="Meeting Outcome" value={item?.meetingOutcome} />
-            <DataListItem title="Initial Visit Date" value={moment(item?.visitDate).format('MMMM DD YYYY, h:mm:ss a')} />
+            <DataListItem title="Initial Visit Date" value={moment(cleanDateString(item.visitDate)).format(cleanDateString(item.visitDate).includes("T") ? "lll" : "ll")} />
             <DataListItem title="Pfi Request" value={item?.pfiRequest ? "Yes" : "No"} />
-            <DataListItem title="Next Visit Date" value={moment(item?.nextVisitDate).format('MMMM Do YYYY, h:mm:ss a')} />
+            <DataListItem title="Next Visit Date" value={moment(cleanDateString(item.nextVisitDate)).format(cleanDateString(item.nextVisitDate).includes("T") ? "lll" : "ll")} />
             <DataListItem title="Created On" value={moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss a')} />
             <DataListItem title="Last Updated" value={moment(item?.updatedAt).format('MMMM Do YYYY, h:mm:ss a')} />
 
