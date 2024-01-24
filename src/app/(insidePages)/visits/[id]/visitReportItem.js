@@ -300,13 +300,13 @@ const VisitReportItem = ({item, refetchVisitReport}) => {
     }
     //return console.log(data)
     sendEmailReminderMutation.mutate(data);
+  }
 
-    const cleanDateString = (date) =>{
-      if(date[date.length - 1] === "T"){
-        date = date.slice(0, -1);
-      }
-      return date;
+  const cleanDateString = (date) =>{
+    if(date[date.length - 1] === "T"){
+      date = date.slice(0, -1);
     }
+    return date;
   }
 
 
