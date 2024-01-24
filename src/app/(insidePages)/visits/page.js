@@ -201,13 +201,9 @@ const VisitReports = () => {
     }else{
       lastVisit = lastReport.visitDate
     }
-    /* data.visitReports.forEach( item =>{
-      if(item.followUpVisits.length){
-        lastVisit = item.followUpVisits[item.followUpVisits.length - 1].meetingDate
-      }else{
-        lastVisit = item.visitDate
-      }
-    }) */
+    if(lastVisit[lastVisit.length - 1] === "T"){
+      lastVisit = lastVisit.slice(0, -1);
+    }
     console.log("last visit: ", lastVisit)
     return lastVisit;
   }
@@ -231,7 +227,7 @@ const VisitReports = () => {
             <p className="mb-0 fw-normal">{item.industry}</p>
           </td>
           <td className="border-bottom-0">
-            <p className="small mb-0 d-flex flex-wrap" style={{ maxWidth: "200px" }}>{moment(deriveLastVisit(item)).format('lll')}</p>
+            <p className="small mb-0 d-flex flex-wrap" style={{ maxWidth: "200px" }}>{moment(deriveLastVisit(item)).format(deriveLastVisit(item).includes("T") ? "lll" : "ll")}</p>
           </td>
           {userData?.staffCadre?.includes("admin") && 
           <td className="border-bottom-0">
