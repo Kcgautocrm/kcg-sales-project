@@ -158,17 +158,17 @@ const EmployeeDetails = () => {
 
               {data ?
                 <>
-                  <DataListItem title="Employee Name" value={`${data.firstName} ${data.middleName} ${data.lastName}`} />
-                  <DataListItem title="Employee" value={data.company.name} />
-                  <DataListItem title="Branch" value={data.branch.name} />
+                  <DataListItem title="Employee Name" value={`${data?.firstName} ${data?.middleName} ${data.lastName}`} />
+                  <DataListItem title="Employee" value={data?.company?.name} />
+                  <DataListItem title="Branch" value={data?.branch?.name} />
                   <DataListItem title="Supervisor" value={data.supervisor ? `${data?.supervisor?.firstName} ${data?.supervisor?.lastName}` : "---"} />
                   <DataListItem title="Staff Cadre" value={data.staffCadre[0]} />
-                  <DataListItem title="Email" value={data.email} />
-                  <DataListItem title="Employment Date" value={ new Date(data.employmentDate).toDateString()} />
+                  <DataListItem title="Email" value={data?.email} />
+                  <DataListItem title="Employment Date" value={ new Date(data?.employmentDate).toDateString()} />
                   <DataListItem title="Brands Assigned" value={listBrandsAssigned()} />
                   <DataListItem title="is Active" value={data?.isActive ? "Yes" : "No"} />
-                  <DataListItem title="Created On" value={moment(data.createdAt).format('MMMM Do YYYY, h:mm:ss a')} />
-                  <DataListItem title="Last Updated" value={moment(data.updatedAt).format('MMMM Do YYYY, h:mm:ss a')} />
+                  <DataListItem title="Created On" value={moment(data?.createdAt).format('MMMM Do YYYY, h:mm:ss a')} />
+                  <DataListItem title="Last Updated" value={moment(data?.updatedAt).format('MMMM Do YYYY, h:mm:ss a')} />
                 </> :
                 <LoadingFallBack />
               }

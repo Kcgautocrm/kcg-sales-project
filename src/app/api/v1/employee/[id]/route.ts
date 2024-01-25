@@ -117,7 +117,7 @@ export async function DELETE(
 
 
     const id = params.id;
-    /* const data = await prisma.employee.findUnique({
+    const data = await prisma.employee.findUnique({
       where: {
         id,
       },
@@ -142,7 +142,7 @@ export async function DELETE(
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
-    } */
+    }
 
 
     await prisma.employee.delete({

@@ -1,11 +1,7 @@
 {
-  "/api/v1/invoiceRequestForm/route": "app/api/v1/invoiceRequestForm/route.js",
-  "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
-  "/api/v1/monthlyTarget/route": "app/api/v1/monthlyTarget/route.js",
-  "/(insidePages)/targetAchievements/page": "app/(insidePages)/targetAchievements/page.js",
-  "/(insidePages)/visits/page": "app/(insidePages)/visits/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(insidePages)/page": "app/(insidePages)/page.js",
   "/(insidePages)/employees/page": "app/(insidePages)/employees/page.js",
-  "/(insidePages)/priceMaster/page": "app/(insidePages)/priceMaster/page.js",
-  "/(insidePages)/customers/page": "app/(insidePages)/customers/page.js",
-  "/api/v1/marketingActivity/excel/route": "app/api/v1/marketingActivity/excel/route.js"
+  "/(insidePages)/employees/add/page": "app/(insidePages)/employees/add/page.js",
+  "/(insidePages)/employees/[id]/page": "app/(insidePages)/employees/[id]/page.js"
 }

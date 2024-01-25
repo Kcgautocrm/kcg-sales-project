@@ -6,11 +6,6 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(insidePages)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/layout.js"
-    ],
     "/(insidePages)/companies/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -20,6 +15,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/brands/page.js"
+    ],
+    "/(insidePages)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/layout.js"
     ],
     "/(insidePages)/products/page": [
       "static/chunks/webpack.js",
@@ -65,6 +65,26 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/targetAchievements/page.js"
+    ],
+    "/(auth)/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(auth)/login/page.js"
+    ],
+    "/(insidePages)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/page.js"
+    ],
+    "/(insidePages)/employees/add/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/employees/add/page.js"
+    ],
+    "/(insidePages)/employees/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/employees/[id]/page.js"
     ]
   }
 }
