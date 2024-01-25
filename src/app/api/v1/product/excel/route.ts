@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
+import reOrderObject from "@/services/reorderObjectKeys";
 
 
 let routeName = "Product"
@@ -43,7 +44,7 @@ export async function GET(request: Request) {
       }); 
     }
     let filteredData : any[]  = [...data];
-    filteredData.forEach( (item) =>{
+    let result = filteredData.map( (item) =>{
         item.brandName = item?.brand?.name;
         item.unitPrice = item?.price?.unitPrice;
         item.promoPrice = item?.price?.promoPrice;
@@ -53,8 +54,24 @@ export async function GET(request: Request) {
         delete item?.brandId
         delete item?.price
         delete item?.extraData
+
+        let orderedObject = reOrderObject(item, ["id", "name", "brandName", "code", "unitPrice", "promoPrice", "description", "specifications", "vatInclusive", "vatRate", "isActive", "createdAt", "updatedAt"]);
+        return orderedObject
+
+        /* let itemOrder = {
+          id: item.id,
+          name: item.name,
+          brandName: item.brandName,
+          code: item.code,
+          unitPrice: item.unitPrice,
+          promoPrice: item.promoPrice
+        }
+        
+        item = Object.assign( itemOrder, item)
+        return item */
     })
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: filteredData }), {
+    console.log(result)
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

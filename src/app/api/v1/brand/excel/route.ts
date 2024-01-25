@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
+import reOrderObject from "@/services/reorderObjectKeys";
 
 
 let routeName = "Brand"
@@ -39,7 +40,15 @@ export async function GET(request: Request) {
         headers: { "Content-Type": "application/json" },
       }); 
     }
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data }), {
+
+    let filteredData : any[]  = [...data];
+    let result = filteredData.map( (item) =>{
+
+        let orderedObject = reOrderObject(item, ["id", "name", "code", "description", "logo", "isActive", "createdAt", "updatedAt" ]);
+        return orderedObject
+    }) 
+
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

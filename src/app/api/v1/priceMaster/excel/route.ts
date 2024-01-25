@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
+import reOrderObject from "@/services/reorderObjectKeys";
 
 
 let routeName = "Price Master"
@@ -42,15 +43,18 @@ export async function GET(request: Request) {
       }); 
     }
     let filteredData : any[]  = [...data];
-    filteredData.forEach( (item) =>{
+    let result = filteredData.map( (item) =>{
         item.brandName = item?.brand?.name;
         item.productName = item?.product?.name;
         delete item?.brand
         delete item?.product
         delete item?.brandId
         delete item?.productId
+
+        let orderedObject = reOrderObject(item, ["id", "brandName", "productName", "anyPromo", "unitPrice", "promoPrice", "promoText", "validFrom", "validTill", "vatInclusive", "vatRate", "isActive", "createdAt", "updatedAt" ]);
+        return orderedObject
     })
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: filteredData }), {
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

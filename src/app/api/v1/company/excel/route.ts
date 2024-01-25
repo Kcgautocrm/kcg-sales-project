@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
 import type { Company } from "@prisma/client";
+import reOrderObject from "@/services/reorderObjectKeys";
 
 
 let routeName = "Company"
@@ -38,13 +39,16 @@ export async function GET(request: Request) {
       }); 
     }
     let filteredData : any[]  = [...data];
-    filteredData.forEach( (item) =>{
+    let result = filteredData.map( (item) =>{
         item.numOfBranches = item?._count.branches;
         item.brands = item.brands.join(", ")
         delete item?._count
         delete item?.extraData
-    })
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: filteredData }), {
+
+        let orderedObject = reOrderObject(item, ["id", "name", "numOfBranches", "code", "brands", "email", "address", "logo", "isActive", "createdAt", "updatedAt" ]);
+        return orderedObject
+    }) 
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

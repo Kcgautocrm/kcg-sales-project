@@ -27,19 +27,19 @@ type VisitReminderEmailParams = {
 }
 
 let transporter = Nodemailer.createTransport({
-  name: "www.banjnetdigital.com",  //www.agronigeria.ng
-  host: "mail.banjnetdigital.com",  //mail.agronigeria.ng
+  name: "Imap.Gmail.Com",  //www.agronigeria.ng
+  host: "Smtp.gmail.com",  //mail.agronigeria.ng
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-    user: "noreply@banjnetdigital.com", //no-reply@agronigeria.ng
-    pass: "Noreply.202317", //AgroNigA!!en90
+    user: "kcgautocrm@kewalramnigeria.com", //no-reply@agronigeria.ng
+    pass: "Muy!36yje", //AgroNigA!!en90
   },
 });
 
 export async function sendAccountCreationEmail({ firstName, middleName = "", lastName, email }: AccountCreationEmailParams): Promise<any> {
   let mailDetails = {
-    from: 'noreply@banjnetdigital.com',
+    from: 'kcgautocrm@kewalramnigeria.com',
     to: `${email}`,
     subject: `Account Creation Email`,
     text: 'Follow the instructions below',
@@ -56,7 +56,7 @@ export async function sendAccountCreationEmail({ firstName, middleName = "", las
 
 export async function sendResetPasswordEmail({ firstName, middleName, lastName, email, token }: ResetPasswordEmailParams): Promise<any> {
   let mailDetails = {
-    from: 'noreply@banjnetdigital.com',
+    from: 'kcgautocrm@kewalramnigeria.com',
     to: `${email}`,
     subject: `Reset Password Email`,
     text: 'Follow the instructions below',
@@ -73,7 +73,7 @@ export async function sendResetPasswordEmail({ firstName, middleName, lastName, 
 
 export async function sendVisitReminderEmail({ customerName, contactPersonName, email, employeeName, visitDate, message }: VisitReminderEmailParams): Promise<any> {
   let mailDetails = {
-    from: 'noreply@banjnetdigital.com',
+    from: 'kcgautocrm@kewalramnigeria.com',
     to: `${email}`,
     subject: `Visit Reminder Email`,
     text: '',

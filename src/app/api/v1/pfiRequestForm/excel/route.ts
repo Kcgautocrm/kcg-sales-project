@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
+import reOrderObject from "@/services/reorderObjectKeys";
 
 
 let routeName = "Pfi Request"
@@ -58,7 +59,7 @@ export async function GET(request: Request) {
       }); 
     }
     let filteredData : any[]  = [...data];
-    filteredData.forEach( (item) =>{
+    let result = filteredData.map( (item) =>{
         item.staffName = `${item?.employee?.firstName} ${item?.employee?.lastName}`;
         item.customer = item?.customer?.companyName;
         item.contactPerson = item?.contactPerson?.name;
@@ -71,8 +72,20 @@ export async function GET(request: Request) {
         delete item?.contactPersonId
         delete item?.brandId
         delete item?.productId
+        delete item?.companyName
+        delete item?.contactPersonName
+
+        const orderedObject = {
+          'id': item?.id,
+          'staffName': item?.staffName,
+          'customer': item?.product,
+          'contactPerson': item?.contactPerson,
+          'brand': item?.brand,
+          'product': item?.product
+        }
+        return Object.assign( orderedObject, item);
     })
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: filteredData }), {
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

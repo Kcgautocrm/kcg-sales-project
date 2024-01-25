@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
+import reOrderObject from "@/services/reorderObjectKeys";
 
 
 let routeName = "Employee"
@@ -42,19 +43,28 @@ export async function GET(request: Request) {
       }); 
     }
     let filteredData : any[]  = [...data];
-    filteredData.forEach( (item) =>{
+    let result = await Promise.all(filteredData.map( async (item) =>{
         item.companyName = item?.company?.name;
         item.branchName = item?.branch?.name;
         item.staffCadre = item?.staffCadre[0];
-        item.brandsAssigned = item.brandsAssigned.join(", ")
+        item.brandsAssigned = item.brandsAssigned.join(", ");
+        let supervisor = await prisma.employee.findFirst({
+          where: {id: item.supervisorId}
+        });
+        item.supervisor = `${supervisor?.firstName || ""} ${supervisor?.lastName || ""}`
+
         delete item?.company
         delete item?.branch
         delete item?.companyId
         delete item?.branchId
         delete item?.extraData
         delete item?.password
-    })
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: filteredData }), {
+        delete item?.supervisorId
+
+        let orderedObject = reOrderObject(item, ["id", "firstName", "middleName", "lastName", "companyName", "branchName", "staffCadre", "email", "supervisor", "employmentDate", "brandsAssigned", "isActive", "createdAt", "updatedAt" ]);
+        return orderedObject
+    }))
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

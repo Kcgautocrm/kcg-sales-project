@@ -11,10 +11,60 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
     ],
+    "/(insidePages)/companies/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/companies/page.js"
+    ],
+    "/(insidePages)/brands/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/brands/page.js"
+    ],
+    "/(insidePages)/products/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/products/page.js"
+    ],
+    "/(insidePages)/priceMaster/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/priceMaster/page.js"
+    ],
+    "/(insidePages)/employees/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/employees/page.js"
+    ],
+    "/(insidePages)/customers/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/customers/page.js"
+    ],
     "/(insidePages)/visits/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/visits/page.js"
+    ],
+    "/(insidePages)/pfiRequests/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/pfiRequests/page.js"
+    ],
+    "/(insidePages)/invoiceRequests/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/invoiceRequests/page.js"
+    ],
+    "/(insidePages)/marketingActivities/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/marketingActivities/page.js"
+    ],
+    "/(insidePages)/targetAchievements/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/targetAchievements/page.js"
     ]
   }
 }

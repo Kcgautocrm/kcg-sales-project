@@ -38,15 +38,21 @@ export async function GET(request: Request) {
       }); 
     }
     let filteredData : any[]  = [...data];
-    filteredData.forEach( (item) =>{
+    let result = filteredData.map( (item) =>{
         item.staffName = `${item?.employee?.firstName} ${item.employee?.lastName}`
         delete item?.images
         delete item?.documents
         delete item?.extraData
         delete item?.employeeId
         delete item?.employee
+
+        const orderedObject = {
+          'id': item?.id,
+          'staffName': item?.staffName
+        }
+        return Object.assign( orderedObject, item);
     })
-    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: filteredData }), {
+    return new NextResponse(JSON.stringify({ message: `${routeName} list fetched successfully`, data: result }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 
