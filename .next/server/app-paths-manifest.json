@@ -1,7 +1,14 @@
 {
-  "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/(insidePages)/page": "app/(insidePages)/page.js",
+  "/(insidePages)/visits/page": "app/(insidePages)/visits/page.js",
+  "/api/v1/comment/route": "app/api/v1/comment/route.js",
+  "/api/v1/customer/route": "app/api/v1/customer/route.js",
+  "/(insidePages)/customers/page": "app/(insidePages)/customers/page.js",
   "/(insidePages)/employees/page": "app/(insidePages)/employees/page.js",
-  "/(insidePages)/employees/add/page": "app/(insidePages)/employees/add/page.js",
-  "/(insidePages)/employees/[id]/page": "app/(insidePages)/employees/[id]/page.js"
+  "/api/v1/employee/route": "app/api/v1/employee/route.js",
+  "/api/v1/company/route": "app/api/v1/company/route.js",
+  "/api/v1/branch/route": "app/api/v1/branch/route.js",
+  "/(insidePages)/visits/[id]/page": "app/(insidePages)/visits/[id]/page.js",
+  "/(insidePages)/customers/[id]/page": "app/(insidePages)/customers/[id]/page.js",
+  "/(insidePages)/employees/[id]/page": "app/(insidePages)/employees/[id]/page.js",
+  "/api/v1/employee/[id]/route": "app/api/v1/employee/[id]/route.js"
 }

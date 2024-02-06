@@ -122,13 +122,15 @@ export async function DELETE(
         }
       },
     });
-    let errorMsg = generateDeleteResourceMsg(data?._count)
+
+
+    /* let errorMsg = generateDeleteResourceMsg(data?._count)
     if(errorMsg){
       return new NextResponse(JSON.stringify({ message: `${modelName} cannot be deleted. ${errorMsg} are assigned to this ${modelName}`, data: data }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
-    }
+    } */
 
 
 
