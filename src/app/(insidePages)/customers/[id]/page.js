@@ -155,7 +155,7 @@ const CustomerDetails = () => {
       console.log(res.data)
       dispatchMessage({ message: "Customer deleted successfully"})
       closeDeleteContactPersonModal.current.click();
-      refetchCustomerDetails();
+      router.push("/customers")
     })
     .catch(error =>{
       console.log(error.message)
