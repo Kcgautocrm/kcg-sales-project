@@ -6,70 +6,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(insidePages)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/page.js"
-    ],
     "/(insidePages)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
     ],
-    "/(auth)/login/page": [
+    "/(insidePages)/employees/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(auth)/login/page.js"
-    ],
-    "/(insidePages)/targetAchievements/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/targetAchievements/page.js"
-    ],
-    "/(insidePages)/targetAchievements/add/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/targetAchievements/add/page.js"
-    ],
-    "/(insidePages)/marketingActivities/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/marketingActivities/page.js"
-    ],
-    "/(insidePages)/marketingActivities/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/marketingActivities/[id]/page.js"
-    ],
-    "/(insidePages)/invoiceRequests/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/invoiceRequests/page.js"
-    ],
-    "/(insidePages)/invoiceRequests/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/invoiceRequests/[id]/page.js"
-    ],
-    "/(insidePages)/pfiRequests/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/pfiRequests/page.js"
-    ],
-    "/(insidePages)/pfiRequests/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/pfiRequests/[id]/page.js"
-    ],
-    "/(insidePages)/visits/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/visits/page.js"
-    ],
-    "/(insidePages)/visits/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/visits/[id]/page.js"
+      "static/chunks/app/(insidePages)/employees/page.js"
     ],
     "/(insidePages)/customers/page": [
       "static/chunks/webpack.js",
@@ -80,16 +25,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/customers/[id]/page.js"
-    ],
-    "/(insidePages)/employees/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/employees/page.js"
-    ],
-    "/(insidePages)/employees/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/employees/[id]/page.js"
     ]
   }
 }

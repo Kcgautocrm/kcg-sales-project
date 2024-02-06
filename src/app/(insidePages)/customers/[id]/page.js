@@ -154,13 +154,13 @@ const CustomerDetails = () => {
     .then(res =>{
       console.log(res.data)
       dispatchMessage({ message: "Customer deleted successfully"})
-      closeDeleteContactPersonModal.current.click();
+      closeDeleteCustomerModal.current.click();
       router.push("/customers")
     })
     .catch(error =>{
       console.log(error.message)
       dispatchMessage({ severity: "error", message: error.message})
-      closeDeleteContactPersonModal.current.click();
+      closeDeleteCustomerModal.current.click();
     })
   }) 
 
