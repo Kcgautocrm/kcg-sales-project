@@ -6,25 +6,60 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/(insidePages)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/page.js"
+    ],
     "/(insidePages)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
     ],
-    "/(insidePages)/employees/page": [
+    "/(auth)/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/employees/page.js"
+      "static/chunks/app/(auth)/login/page.js"
     ],
-    "/(insidePages)/customers/page": [
+    "/(insidePages)/products/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/customers/page.js"
+      "static/chunks/app/(insidePages)/products/page.js"
     ],
-    "/(insidePages)/customers/[id]/page": [
+    "/(insidePages)/priceMaster/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/customers/[id]/page.js"
+      "static/chunks/app/(insidePages)/priceMaster/page.js"
+    ],
+    "/(insidePages)/priceMaster/add/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/priceMaster/add/page.js"
+    ],
+    "/(insidePages)/brands/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/brands/page.js"
+    ],
+    "/(insidePages)/brands/[id]/edit/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/brands/[id]/edit/page.js"
+    ],
+    "/(insidePages)/brands/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/brands/[id]/page.js"
+    ],
+    "/(insidePages)/priceMaster/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/priceMaster/[id]/page.js"
+    ],
+    "/(insidePages)/products/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/products/[id]/page.js"
     ]
   }
 }

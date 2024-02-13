@@ -25,17 +25,23 @@ const LoadingFallBack = () =>{
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
-      </tr>
-      <tr sx={{ width: "100%" }}>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
       </tr>
       <tr sx={{ width: "100%" }}>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+      </tr>
+      <tr sx={{ width: "100%" }}>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
@@ -172,19 +178,22 @@ const Products = () =>{
   })
 
   const deriveProductStatus = (priceData)=>{
-    let {unitPrice, promoPrice, validTill, anyPromo} = priceData
-    let validTillString = new Date(validTill).getTime();
+    //let {unitPrice, promoPrice, validTill, anyPromo} = priceData
+    let validTillString = new Date(priceData?.validTill).getTime();
     let currentDateString = new Date().getTime();
     let result = {};
-    if(!anyPromo){
-      result.price = unitPrice
+    if(!priceData?.anyPromo){
+      result.price = priceData?.unitPrice
       result.promoActive = false;
+      result.promoPrice = "---"
     }else if(currentDateString >= validTillString){
-      result.price = unitPrice
+      result.price = priceData?.unitPrice
       result.promoActive = false;
+      result.promoPrice = "---"
     }else if(currentDateString < validTillString){
-      result.price = promoPrice
+      result.price = priceData?.unitPrice
       result.promoActive = true;
+      result.promoPrice = priceData?.promoPrice
     }
 
     return result
@@ -216,7 +225,10 @@ const Products = () =>{
             </div>
           </td>
           <td className="border-bottom-0 py-2">
-            <p className="small mb-0 d-flex flex-wrap">{price ? formatAsCurrency(deriveProductStatus(price).price) : ""}</p>
+            <p className="small mb-0 d-flex flex-wrap">{price ? formatAsCurrency(deriveProductStatus(price).price) : "---"}</p>
+          </td>
+          <td className="border-bottom-0 py-2">
+            <p className="small mb-0 d-flex flex-wrap">{formatAsCurrency(deriveProductStatus(price).promoPrice)}</p>
           </td>
           <td className="border-bottom-0">
             <p className="small mb-0">{isActive ? "Yes" : "No"}</p>
@@ -349,7 +361,10 @@ const Products = () =>{
                           <h6 className="fw-semibold mb-0">Brand Name</h6>
                         </th>
                         <th className="border-bottom-0">
-                          <h6 className="fw-semibold mb-0">Price</h6>
+                          <h6 className="fw-semibold mb-0">Unit Price</h6>
+                        </th>
+                        <th className="border-bottom-0">
+                          <h6 className="fw-semibold mb-0">Promo Price</h6>
                         </th>
                         <th className="border-bottom-0">
                           <h6 className="fw-semibold mb-0">is Active?</h6>

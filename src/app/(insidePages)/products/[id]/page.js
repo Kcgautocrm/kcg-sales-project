@@ -171,12 +171,15 @@ const ProductDetails = () => {
         if(!anyPromo){
           result.price = unitPrice
           result.promoActive = false;
+          result.promoPrice = "---"
         }else if(currentDateString >= validTillString){
           result.price = unitPrice
           result.promoActive = false;
+          result.promoPrice = "---"
         }else if(currentDateString < validTillString){
           result.price = promoPrice
           result.promoActive = true;
+          result.promoPrice = promoPrice;
         }
     
         return result
@@ -223,7 +226,8 @@ const ProductDetails = () => {
                   <DataListItem title="Product Name" value={data.name} />
                   {userData?.staffCadre?.includes("admin") && <DataListItem title="Product Code" value={data.code} />}
                   <DataListItem title="Brand" value={data.brand.name} />
-                  <DataListItem title="Price" value={formatAsCurrency(deriveProductStatus(data.price)?.price || "")} />
+                  <DataListItem title="Unit Price" value={formatAsCurrency(deriveProductStatus(data.price)?.price || "")} />
+                  <DataListItem title="Promo Price" value={formatAsCurrency(deriveProductStatus(data.price)?.promoPrice || "")} />
                   <DataListItem title="Description" value={data.description} />
                   <DataListItem title="Specifications" value={data.specifications} />
                   <DataListItem title="Is Active?" value={data.isActive ? "Yes" : "No"} />

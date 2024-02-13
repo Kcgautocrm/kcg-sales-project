@@ -28,18 +28,27 @@ const LoadingFallBack = () =>{
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
-      </tr>
-      <tr sx={{ width: "100%" }}>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
       </tr>
       <tr sx={{ width: "100%" }}>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+      </tr>
+      <tr sx={{ width: "100%" }}>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
@@ -90,12 +99,15 @@ const PriceMaster = () =>{
     if(!anyPromo){
       result.price = unitPrice
       result.promoActive = false;
+      result.promoPrice = "---"
     }else if(currentDateString >= validTillString){
       result.price = unitPrice
       result.promoActive = false;
+      result.promoPrice = "---"
     }else if(currentDateString < validTillString){
-      result.price = promoPrice
+      result.price = unitPrice
       result.promoActive = true;
+      result.promoPrice = promoPrice
     }
 
     return result
@@ -114,7 +126,10 @@ const PriceMaster = () =>{
             <p className="mb-0 fw-normal">{brand.name}</p>
           </td>
           <td className="border-bottom-0">
-            <h6 className="fw-semibold m-0">{formatAsCurrency(deriveProductStatus(unitPrice, promoPrice, validTill, anyPromo).price)}</h6>
+            <h6 className="fw-semibold m-0">{formatAsCurrency(unitPrice)}</h6>
+          </td>
+          <td className="border-bottom-0">
+            <h6 className="fw-semibold m-0">{formatAsCurrency(deriveProductStatus(unitPrice, promoPrice, validTill, anyPromo).promoPrice)}</h6>
           </td>
           <td className="border-bottom-0">
             <h6 className="fw-semibold m-0">{vatInclusive ? `Yes - ${vatRate}` : "No"}</h6>
@@ -198,6 +213,9 @@ const PriceMaster = () =>{
                         </th>
                         <th className="border-bottom-0">
                           <h6 className="fw-semibold mb-0">Unit Price</h6>
+                        </th>
+                        <th className="border-bottom-0">
+                          <h6 className="fw-semibold mb-0">Promo Price</h6>
                         </th>
                         <th className="border-bottom-0">
                           <h6 className="fw-semibold mb-0">Vat Inclusive?</h6>
