@@ -329,7 +329,7 @@ const PfiRequestDetails = () => {
                   <DataListItem title="Approved" value={data.approved ? "Yes" : "No"} />
                   <DataListItem title="Locked" value={data.locked ? "Yes" : "No"} />
                   <DataListItem title="Pfi Reference Number" value={data.pfiReferenceNumber} />
-                  <DataListItem title="Pfi Date" value={moment(new Date(data.pfiDate)).format('ll')} />
+                  <DataListItem title="Pfi Date" value={data?.pfiDate && moment(new Date(data.pfiDate)).format('ll')} />
                   <DataListItem title="Additional Information" value={data.additionalInformation} />
                   <DataListItem title="Created On" value={moment(data.createdAt).format('MMMM Do YYYY, h:mm:ss a')} />
                   <DataListItem title="Last Updated" value={moment(data.updatedAt).format('MMMM Do YYYY, h:mm:ss a')} />
