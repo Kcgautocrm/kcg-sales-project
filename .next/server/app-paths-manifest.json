@@ -1,7 +1,1 @@
-{
-  "/(insidePages)/products/page": "app/(insidePages)/products/page.js",
-  "/(insidePages)/priceMaster/page": "app/(insidePages)/priceMaster/page.js",
-  "/(insidePages)/priceMaster/add/page": "app/(insidePages)/priceMaster/add/page.js",
-  "/(insidePages)/priceMaster/[id]/page": "app/(insidePages)/priceMaster/[id]/page.js",
-  "/(insidePages)/products/[id]/page": "app/(insidePages)/products/[id]/page.js"
-}
+{}
