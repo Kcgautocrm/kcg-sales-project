@@ -185,11 +185,11 @@ const Products = () =>{
     if(!priceData?.anyPromo){
       result.price = priceData?.unitPrice
       result.promoActive = false;
-      result.promoPrice = "---"
+      result.promoPrice = ""
     }else if(currentDateString >= validTillString){
       result.price = priceData?.unitPrice
       result.promoActive = false;
-      result.promoPrice = "---"
+      result.promoPrice = ""
     }else if(currentDateString < validTillString){
       result.price = priceData?.unitPrice
       result.promoActive = true;
@@ -225,10 +225,10 @@ const Products = () =>{
             </div>
           </td>
           <td className="border-bottom-0 py-2">
-            <p className="small mb-0 d-flex flex-wrap">{price ? formatAsCurrency(deriveProductStatus(price).price) : "---"}</p>
+            <p className="small mb-0 d-flex flex-wrap">{formatAsCurrency(deriveProductStatus(price).price) || "---"}</p>
           </td>
           <td className="border-bottom-0 py-2">
-            <p className="small mb-0 d-flex flex-wrap">{formatAsCurrency(deriveProductStatus(price).promoPrice)}</p>
+            <p className="small mb-0 d-flex flex-wrap">{formatAsCurrency(deriveProductStatus(price).promoPrice) || "---" }</p>
           </td>
           <td className="border-bottom-0">
             <p className="small mb-0">{isActive ? "Yes" : "No"}</p>

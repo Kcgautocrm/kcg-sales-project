@@ -14,6 +14,7 @@ import ConfirmationModal from '@/components/confirmationModal';
 import moment from "moment";
 import useGetUserData from "@/hooks/useGetUserData";
 import AppAutoComplete from "@/components/autoComplete";
+import * as XLSX from 'xlsx';
 
 
 const DataListItem = ({title, value}) => {
@@ -337,6 +338,32 @@ const CustomerDetails = () => {
     })
   }
 
+  const allContactPersonsQuery = useQuery({
+    queryKey: ["allContactPersons-excel" ],
+    queryFn:  ()=>apiGet({ url: `/contactPerson/excel?customerId=${id}`})
+    .then(res => {
+      console.log(res)
+      downloadExcel(res.data)
+      return res.data
+    })
+    .catch(error =>{
+      console.log(error)
+      dispatchMessage({severity: "error", message: error.message})
+      return []
+    }),
+    enabled: false
+  })
+
+
+  const downloadExcel = (data) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Customer-DataSheet.xlsx");
+  };
+
 
   return (
     <div className="container-fluid">
@@ -412,7 +439,14 @@ const CustomerDetails = () => {
             </div>
 
             <div className="card-body p-4">
-              <h5 className="card-title fw-semibold mb-4 opacity-75">Contact Persons</h5>
+              <div className="d-flex align-items-center mb-3">
+                <h5 className="card-title fw-semibold mb-0 opacity-75">Contact Persons</h5>
+
+                {userData?.staffCadre?.includes("admin") &&
+                  <button type="button" className="btn btn-secondary px-5 py-2 ms-auto mt-3 mt-md-0" disabled={allContactPersonsQuery?.isFetching} onClick={() => allContactPersonsQuery.refetch()}>
+                    {allContactPersonsQuery?.isFetching ? "Fetching..." : "Download As Excel"}
+                  </button>}
+              </div>
               <div className="table-responsive">
                 <table className="table text-nowrap mb-0 align-middle">
                   <thead className="text-dark fs-4">

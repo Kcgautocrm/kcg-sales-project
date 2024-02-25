@@ -116,7 +116,7 @@ const EditBranch = () => {
         console.log(res.data)
         dispatchMessage({ message: res.message })
         queryClient.invalidateQueries(["allBranches", id])
-        router.push(`/branches/${id}`)
+        router.push(`/companies/${data?.companyId}`)
       })
       .catch(error => {
         console.log(error)
