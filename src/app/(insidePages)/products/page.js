@@ -242,13 +242,23 @@ const Products = () =>{
     })
   }
 
+  
+  const downloadExcel111 = (data) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Product-DataSheet.xlsx");
+  };
+
 
   const allProductsQuery = useQuery({
     queryKey: ["allProducts-excel" ],
     queryFn:  ()=>apiGet({ url: `/product/excel`})
     .then(res => {
       console.log(res)
-      downloadExcel(res.data)
+      downloadExcel111(res.data)
       return res.data
     })
     .catch(error =>{
@@ -260,15 +270,7 @@ const Products = () =>{
   })
 
 
-  const downloadExcel = (data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workbook, "Product-DataSheet.xlsx");
-  };
-
+  
 
   const handleSubmit = (e) => {
     e.preventDefault()
