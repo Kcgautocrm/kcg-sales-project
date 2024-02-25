@@ -16,25 +16,25 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(insidePages)/pfiRequests/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/pfiRequests/page.js"
-    ],
     "/(insidePages)/products/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/products/page.js"
     ],
-    "/(insidePages)/customers/page": [
+    "/(insidePages)/pfiRequests/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/customers/page.js"
+      "static/chunks/app/(insidePages)/pfiRequests/page.js"
     ],
     "/(insidePages)/pfiRequests/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/pfiRequests/[id]/page.js"
+    ],
+    "/(insidePages)/customers/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/customers/page.js"
     ],
     "/(insidePages)/customers/[id]/page": [
       "static/chunks/webpack.js",
@@ -61,15 +61,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/branches/[id]/edit/page.js"
     ],
-    "/(insidePages)/brands/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/brands/page.js"
-    ],
     "/(insidePages)/branches/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/branches/[id]/page.js"
+    ],
+    "/(insidePages)/brands/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/brands/page.js"
     ],
     "/(insidePages)/brands/[id]/page": [
       "static/chunks/webpack.js",

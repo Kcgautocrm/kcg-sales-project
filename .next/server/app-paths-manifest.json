@@ -2,12 +2,6 @@
   "/(insidePages)/customers/page": "app/(insidePages)/customers/page.js",
   "/(insidePages)/visits/page": "app/(insidePages)/visits/page.js",
   "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
-  "/api/v1/pfiRequestForm/route": "app/api/v1/pfiRequestForm/route.js",
-  "/api/v1/customer/route": "app/api/v1/customer/route.js",
-  "/api/v1/brand/route": "app/api/v1/brand/route.js",
-  "/api/v1/product/route": "app/api/v1/product/route.js",
-  "/api/v1/employee/route": "app/api/v1/employee/route.js",
-  "/api/v1/contactPerson/route": "app/api/v1/contactPerson/route.js",
   "/(insidePages)/employees/[id]/page": "app/(insidePages)/employees/[id]/page.js",
   "/(insidePages)/customers/[id]/page": "app/(insidePages)/customers/[id]/page.js"
 }
