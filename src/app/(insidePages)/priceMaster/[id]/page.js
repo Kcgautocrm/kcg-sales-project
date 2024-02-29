@@ -99,11 +99,11 @@ const PriceMasterDetails = () => {
     if(!anyPromo){
       result.price = unitPrice;
       result.promoActive = false;
-      result.promoPrice = "---";
+      result.promoPrice = "";
     }else if(currentDateString >= validTillString){
       result.price = unitPrice;
       result.promoActive = false;
-      result.promoPrice = "---";
+      result.promoPrice = "";
     }else if(currentDateString < validTillString){
       result.price = promoPrice;
       result.promoActive = true;
@@ -132,11 +132,11 @@ const PriceMasterDetails = () => {
                 <>
                   <DataListItem title="Product" value={data.product.name} />
                   <DataListItem title="Brand" value={data.brand.name} />
-                  <DataListItem title="Unit Price" value={formatAsCurrency(data.unitPrice)} />
+                  <DataListItem title="Unit Price" value={formatAsCurrency(data.unitPrice) || "---"} />
                   <DataListItem title="Vat Inclusive?" value={data.vatInclusive ? "Yes" : "No"} />
                   <DataListItem title="Vat Rate" value={data.vatRate} />
                   <DataListItem title="Any Promo" value={deriveProductStatus(data.unitPrice, data.promoPrice, data.validTill, data.anyPromo).promoActive ? "Yes" : "No"} />
-                  <DataListItem title="Promo Price" value={data.promoPrice ? deriveProductStatus(data.unitPrice, data.promoPrice, data.validTill, data.anyPromo).promoPrice : "---"} />
+                  <DataListItem title="Promo Price" value={formatAsCurrency(deriveProductStatus(data.unitPrice, data.promoPrice, data.validTill, data.anyPromo).promoPrice) || "---"} />
                   <DataListItem title="Promo Text" value={data.promoText || "---"} />
                   <DataListItem title="Valid From" value={data.validFrom ? `${moment(new Date(data.validFrom)).format('MMMM Do YYYY, h:mm:ss a')}` : "---"} />
                   <DataListItem title="Valid Till" value={data.validTill ? `${moment(new Date(data.validTill)).format('MMMM Do YYYY, h:mm:ss a')}`: "---"} />

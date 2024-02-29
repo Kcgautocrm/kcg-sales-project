@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { getDecodedToken } from "@/services/localStorageService";
 import useGetUserData from "@/hooks/useGetUserData";
 import formatMonth from '@/services/formatMonth';
+import { useEffect, useState } from "react";
 
 
 const DataListItem = ({title, value}) => {
@@ -59,13 +60,15 @@ const MonthlyTargetDetails = () => {
   const dispatchMessage = useDispatchMessage();
   const {userData} = useGetUserData();
   const tokenData = getDecodedToken()
+  const [employeeId, setEmployeeId] = useState("")
+  const [totalTargetForYear, setTotalTargetForYear] = useState(null)
  
   const {data, isFetching} = useQuery({
     queryKey: ["allTargets", id],
     queryFn: () => apiGet({ url: `/monthlyTarget/${id}`})
     .then(res =>{
       console.log(res.data)
-      //dispatchMessage({ message: res.message})
+      setEmployeeId(res?.data?.employeeId)
       return res.data
     })
     .catch(error =>{
@@ -76,6 +79,67 @@ const MonthlyTargetDetails = () => {
     staleTime: Infinity,
     retry: 3
   }) 
+
+  const getAchievementForTheMonth = (month, invoiceRequestForms) =>{
+    let achievement = 0
+    invoiceRequestForms.forEach( item =>{
+      let invoiceMonth = new Date(item.createdAt).getMonth();
+      let targetMonth = new Date(month).getMonth();
+      console.log(invoiceMonth, targetMonth)
+      if(invoiceMonth === targetMonth){
+        achievement += parseInt(item.quantity);
+      }
+    })
+    return achievement;
+  }
+
+  const {data: allMonthlyTargetsForEmployee, isFetching: isFetchingMonthlyTargets, refetch: refetchMonthlyTargets} = useQuery({
+    queryKey: ["allMonthlyTargets" ],
+    queryFn: ()=>apiGet({ url: `/monthlyTarget?&employeeId=${employeeId}`})
+    .then(res => {
+      console.log(res)
+      getTotalTargetForTheYear(res.data.data)
+      return res.data
+    })
+    .catch(error =>{
+      console.log(error)
+      dispatchMessage({severity: "error", message: error.message})
+      return {}
+    }),
+    enabled: false
+  })
+
+  useEffect(()=>{
+    if(employeeId){
+      refetchMonthlyTargets()
+    }
+  }, [employeeId])
+
+  const getAchievementForTheYear = (invoiceRequestForms) =>{
+    let achievement = 0
+    invoiceRequestForms.forEach( item =>{
+      let invoiceYear = new Date(item.createdAt).getFullYear();
+      let currentYear = new Date().getFullYear();
+      console.log(item)
+      if(invoiceYear === currentYear){
+        achievement += parseInt(item.quantity);
+      }
+    })
+    return achievement;
+  }
+
+  const getTotalTargetForTheYear = (monthlyTargets) =>{
+    console.log(monthlyTargets)
+    let totalTargetForYear = 0
+    monthlyTargets.forEach( item =>{
+      let monthlyTargetYear = new Date(item.month).getFullYear();
+      let currentYear = new Date().getFullYear();
+      if(monthlyTargetYear === currentYear){
+        totalTargetForYear += parseInt(item.target);
+      }
+    })
+    setTotalTargetForYear(totalTargetForYear)
+  }
 
 
   return (
@@ -94,8 +158,13 @@ const MonthlyTargetDetails = () => {
               <h5 className="card-title fw-semibold mb-4 opacity-75">Monthly Target Details</h5>
               {data ?
                 <>
+                  {userData?.id !== data?.employee?.id && <DataListItem title="Employee" value={`${data?.employee?.firstName} ${data?.employee?.lastName}`} />}
                   <DataListItem title="Month" value={`${formatMonth(new Date(data.month).getMonth())} ${new Date(data.month).getFullYear()}`} />
-                  <DataListItem title="Target" value={data.target} />
+                  <DataListItem title={`${formatMonth(new Date(data.month).getMonth())} ${new Date(data.month).getFullYear()} Target`} value={data.target} />
+                  <DataListItem title={`${formatMonth(new Date(data.month).getMonth())} ${new Date(data.month).getFullYear()} Achievement`} value={getAchievementForTheMonth(data?.month, data.employee?.invoiceRequestForms)} />
+                  <hr />
+                  <DataListItem title={`Total Target for ${new Date(data.month).getFullYear()}`} value={totalTargetForYear} />
+                  <DataListItem title={`Total Achievement for ${new Date(data.month).getFullYear()}`} value={getAchievementForTheYear(data.employee?.invoiceRequestForms)} />
                 </> :
                 <LoadingFallBack />
               }

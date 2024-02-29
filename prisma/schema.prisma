@@ -119,6 +119,7 @@ model Employee {
   pfiRequestForms       PfiRequestForm[]
   invoiceRequestForms   InvoiceRequestForm[]
   MarkettingActivities  MarkettingActivity[]
+  monthlyTargets        MonthlyTarget[]
   sentComments          Comment[]               @relation("Sender")
   receivedComments      Comment[]               @relation("Receiver")
   extraData             Json?
@@ -336,6 +337,8 @@ model MarkettingActivity {
 
 model MonthlyTarget {
   id            String   @id @default(uuid())
+  employee      Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId    String?
   month         String   @db.VarChar(50)
   target        String
   extraData     Json?

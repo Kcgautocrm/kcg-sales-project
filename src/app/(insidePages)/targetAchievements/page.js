@@ -5,7 +5,6 @@ import { apiGet, apiDelete } from "@/services/apiService";
 import useDispatchMessage from "@/hooks/useDispatchMessage";
 import Skeleton from '@mui/material/Skeleton';
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import clipLongText from "@/services/clipLongText";
 import formatMonth from '@/services/formatMonth';
 import ConfirmationModal from "@/components/confirmationModal";
 import useGetUserData from "@/hooks/useGetUserData";
@@ -22,21 +21,26 @@ const LoadingFallBack = () =>{
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
-      </tr>
-      <tr sx={{ width: "100%" }}>
-        <td><Skeleton height={50} animation="wave" /></td>
-        <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
       </tr>
       <tr sx={{ width: "100%" }}>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
+      </tr>
+      <tr sx={{ width: "100%" }}>
+        <td><Skeleton height={50} animation="wave" /></td>
+        <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
         <td><Skeleton height={50} animation="wave" /></td>
       </tr>
     </>
-    
   );
 }
 
@@ -50,9 +54,11 @@ const MonthlyTargets = () =>{
   const searchParams = useSearchParams();
   const employeeId = searchParams.get("employeeId");
 
+  const [month, setMonth] = useState("");
+
   const {data, isFetching, refetch: refetchMonthlyTargets} = useQuery({
     queryKey: ["allMonthlyTargets" ],
-    queryFn: ()=>apiGet({ url: `/monthlyTarget`})
+    queryFn: ()=>apiGet({ url: `/monthlyTarget?month=${month}&employeeId=${userData?.staffCadre?.includes("admin") ? "" : employeeId || userData?.id }`})
     .then(res => {
       console.log(res)
       return res.data
@@ -62,13 +68,12 @@ const MonthlyTargets = () =>{
       dispatchMessage({severity: "error", message: error.message})
       return {}
     }),
-    staleTime: Infinity,
-    retry: 3
+    enabled: false
   })
-  const [salesInvoices, setSalesInvoices] = useState([])
+  // const [salesInvoices, setSalesInvoices] = useState([])
   const [monthlyTargetToDeleteId, setMonthlyTargetToDeleteId] = useState("")
 
-  const fetchInvoiceRequests = () =>{
+  /* const fetchInvoiceRequests = () =>{
     apiGet({ url: `/invoiceRequestForm?employeeId=${userData.id}&approved=approved`})
     .then(res => {
       console.log(res)
@@ -78,9 +83,9 @@ const MonthlyTargets = () =>{
       console.log(error)
       dispatchMessage({severity: "error", message: error.message})
     })
-  }
+  } */
 
-  const getAchievementForTheYear = () =>{
+  /* const getAchievementForTheYear = () =>{
     let achievement = 0
     salesInvoices.forEach( item =>{
       let invoiceYear = new Date(item.createdAt).getFullYear();
@@ -91,13 +96,14 @@ const MonthlyTargets = () =>{
       }
     })
     return achievement;
-  }
+  } */
 
-  const getAchievementForTheMonth = (month) =>{
+  const getAchievementForTheMonth = (month, invoiceRequestForms) =>{
     let achievement = 0
-    salesInvoices.forEach( item =>{
+    invoiceRequestForms.forEach( item =>{
       let invoiceMonth = new Date(item.createdAt).getMonth();
       let targetMonth = new Date(month).getMonth();
+      console.log(invoiceMonth, targetMonth)
       if(invoiceMonth === targetMonth){
         achievement += parseInt(item.quantity);
       }
@@ -105,29 +111,47 @@ const MonthlyTargets = () =>{
     return achievement;
   }
 
-  useEffect(()=>{
-    if(userData.id){
+  /* useEffect(()=>{
+    if(userData?.id){
       fetchInvoiceRequests()
     }
-  },[userData])
+  },[userData]) */
+
+  useEffect(()=>{
+    let currentMonth = `${new Date().getFullYear()}-${(new Date().getMonth() + 1).toString().length > 1 ? new Date().getMonth() + 1 : `0${new Date().getMonth() + 1}`}`;
+    if(!month){
+      setMonth(currentMonth)
+    }else{
+      refetchMonthlyTargets()
+    }
+  },[month])
+
+  
 
 
   const listMonthlyTargets = () =>{
     return data.data.map( (item, index) => {
-      const {id, month, target} = item;
+      const {id, month, target, employee} = item;
       return( 
         <tr key={id} className="hover">
           <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{index + 1}</h6></td>
-          <td className="border-bottom-0 link-style111" >
-            <h6 className="fw-semibold mb-1 text-primary111">{formatMonth(new Date(month).getMonth())} {new Date(month).getFullYear()}</h6>
+          <td className="border-bottom-0 link-style text-primary" onClick={() => {
+            router.push(`/targetAchievements/${id}`)
+          }}>
+            <h6 className="fw-semibold m-0 text-primary">{employee?.firstName} {employee?.lastName}</h6>
+            <p className="fw-normal m-0">{employee?.email}</p>
+          </td>
+          <td className="border-bottom-0 link-style" onClick={() => {
+            router.push(`/targetAchievements/${id}`)
+            }}>
+            <p className="fw-semibold mb-1 text-primary">{formatMonth(new Date(month).getMonth())} {new Date(month).getFullYear()}</p>
           </td>
           <td className="border-bottom-0">
             <p className="mb-0 fw-normal">{target}</p>
           </td>
-          {userData?.staffCadre?.includes("salesPerson") && 
           <td className="border-bottom-0">
-            <p className="mb-0 fw-normal">{getAchievementForTheMonth(month)}</p>
-          </td>}
+            <p className="mb-0 fw-normal">{getAchievementForTheMonth(month, employee?.invoiceRequestForms)}</p>
+          </td>
           {userData?.staffCadre?.includes("admin") && 
           <td className="border-bottom-0">
             <a className="btn btn-link text-primary ms-auto" href={`/targetAchievements/${id}/edit`}>Edit</a>
@@ -154,6 +178,9 @@ const MonthlyTargets = () =>{
   }) 
 
 
+
+
+
   const allTargetAchievementsQuery = useQuery({
     queryKey: ["allTargetAchievements-excel" ],
     queryFn:  ()=>apiGet({ url: `/monthlyTarget/excel`})
@@ -169,7 +196,6 @@ const MonthlyTargets = () =>{
     }),
     enabled: false
   })
-
 
   const downloadExcel = (data) => {
     const worksheet = XLSX.utils.json_to_sheet(data);
@@ -200,10 +226,13 @@ const MonthlyTargets = () =>{
       {canShowTable() &&
         <div className="container-fluid">
           <header className="d-flex align-items-center mb-4">
-            <h4 className="m-0">{new Date().getFullYear()} Target: {data?.targetForCurrentYearCount}</h4>
+            <div className='d-flex'>
+              <input type="month" className="form-control" id="month" value={month} onChange={(e) => setMonth(e.target.value)} />
+            </div>
+            {/* <h4 className="m-0">{new Date().getFullYear()} Target: {data?.targetForCurrentYearCount}</h4>
             {userData?.staffCadre?.includes("salesPerson") &&
               <h4 className="m-0 ms-auto">Achievement Till Date: {getAchievementForTheYear()}</h4>
-            }
+            } */}
             {userData?.staffCadre?.includes("admin") && <a className="btn btn-link text-primary ms-auto" href="/targetAchievements/add">Add</a>}
           </header>
 
@@ -220,15 +249,17 @@ const MonthlyTargets = () =>{
                             <h6 className="fw-semibold mb-0">#</h6>
                           </th>
                           <th className="border-bottom-0">
+                            <h6 className="fw-semibold mb-0">Employee</h6>
+                          </th>
+                          <th className="border-bottom-0">
                             <h6 className="fw-semibold mb-0">Month</h6>
                           </th>
                           <th className="border-bottom-0">
                             <h6 className="fw-semibold mb-0">Sales Target</h6>
                           </th>
-                          {userData?.staffCadre?.includes("salesPerson") &&
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Achievement</h6>
-                            </th>}
+                          <th className="border-bottom-0">
+                            <h6 className="fw-semibold mb-0">Achievement</h6>
+                          </th>
                           {userData?.staffCadre?.includes("admin") &&
                             <th className="border-bottom-0">
                               <h6 className="fw-semibold mb-0">Actions</h6>

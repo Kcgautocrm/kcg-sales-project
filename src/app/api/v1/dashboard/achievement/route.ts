@@ -24,6 +24,7 @@ export async function GET(request: Request) {
 
     const monthTarget = await prisma.monthlyTarget.findFirst({
       where: {
+        ...(employeeId && {employeeId}),
         ...( month && {month})
       },
       select: {

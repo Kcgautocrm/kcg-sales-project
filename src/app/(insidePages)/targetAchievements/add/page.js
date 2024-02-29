@@ -12,6 +12,7 @@ const AddMonthlyTarget = () => {
   const dispatchMessage = useDispatchMessage();
   const router = useRouter()
   const [formData, setFormData] = useState({
+    employeeId: "",
     month: "",
     target: "",
   })
@@ -24,11 +25,32 @@ const AddMonthlyTarget = () => {
       return;
     }
 
-
     setFormData(prevState => ({
       ...prevState,
       [prop]: event.target.value
     }))
+  }
+
+  const employeeQuery = useQuery({
+    queryKey: ["allEmployees"],
+    queryFn: () => apiGet({ url: "/employee?isActive=true" })
+      .then(res => {
+        console.log(res)
+        return res.data
+      })
+      .catch(error => {
+        console.log(error)
+        dispatchMessage({ severity: "error", message: error.message })
+        return []
+      }),
+      staleTime: Infinity,
+      retry: 3
+  })
+
+  const listEmployees = () =>{
+    return employeeQuery?.data.map(employee =>
+      <option key={employee.id} value={employee.id}>{employee.firstName} {employee.middleName[0]} {employee.lastName}</option>
+    )
   }
 
   const queryClient = useQueryClient();
@@ -38,7 +60,7 @@ const AddMonthlyTarget = () => {
         console.log(res.data)
         dispatchMessage({ message: res.message })
         queryClient.invalidateQueries(["allMonthlyTargets"])
-        router.push("/targetAchievements")
+        //router.push("/targetAchievements")
       })
       .catch(error => {
         console.log(error)
@@ -48,8 +70,8 @@ const AddMonthlyTarget = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
-    let errors = formValidator(["month", "target"], formData);
+    // return console.log(formData);
+    let errors = formValidator(["month", "target", "employeeId"], formData);
     if(Object.keys(errors).length){
       dispatchMessage({ severity: "error", message: "Some required fields are empty" })
       return setErrors(errors);
@@ -70,6 +92,13 @@ const AddMonthlyTarget = () => {
             <div className="card-body p-4" style={{ maxWidth: "700px" }}>
               <h5 className="card-title fw-semibold mb-4 opacity-75">Add Monthly Target</h5>
               <form>
+                <div className="mb-3">
+                  <label htmlFor="employeeId" className="form-label">Employee</label>
+                  <select className="form-select shadow-none" id="employeeId" value={formData.employeeId} onChange={handleChange("employeeId")} aria-label="Default select example">
+                    <option value="">Select Employee</option>
+                    {!employeeQuery.isLoading && listEmployees()}
+                  </select>
+                </div>
 
                 <div className="mb-3">
                   <label htmlFor="month" className="form-label">Month (<span className='fst-italic text-warning'>required</span>)</label>

@@ -24,6 +24,16 @@ export async function GET(
       where: {
         id,
       },
+      
+      include: {
+        employee: {
+          include: {
+            invoiceRequestForms: {
+              where: {approved: true}
+            }
+          }
+        }
+      }
     });
   
     if (!data) {

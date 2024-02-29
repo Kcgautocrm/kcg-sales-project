@@ -1,7 +1,5 @@
 "use client"
 
-import Image from 'next/image'
-import styles from './page.module.css'
 import { useState, useEffect } from 'react'
 import AppPieChart from "@/components/pieChart";
 import moment from 'moment';
@@ -155,6 +153,7 @@ export default function Home() {
   useEffect(()=>{
     let currentDate = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
     let currentMonth = `${new Date().getFullYear()}-${new Date().getMonth() + 1}`;
+    console.log(currentMonth)
     if(userData?.staffCadre.includes("salesPerson") && userData?.accountType !== "Supervisor"){
       setEmployeeId(userData?.id)
     }else{
@@ -173,30 +172,34 @@ export default function Home() {
   },[userData])
 
   const fetchPfiRequests = ()=>{
-    let startDate = new Date(moment(pfiRequestMonth, 'YYYY-MMM')?.startOf("month"))?.toISOString();
-    let endDate = new Date(moment(pfiRequestMonth, 'YYYY-MMM')?.endOf("month"))?.toISOString();
+    let startDate = new Date(moment(pfiRequestMonth, 'YYYY-MM')?.startOf("month"))?.toISOString();
+    let endDate = new Date(moment(pfiRequestMonth, 'YYYY-MM')?.endOf("month"))?.toISOString();
+    console.log(startDate, endDate);
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`;
     pfiRequestQuery.mutate(searchParams);
   }
 
   const fetchinvoiceRequests = ()=>{
-    let startDate = new Date(moment(invoiceRequestMonth, 'YYYY-MMM').startOf("month")).toISOString();
-    let endDate = new Date(moment(invoiceRequestMonth, 'YYYY-MMM').endOf("month")).toISOString();
+    let startDate = new Date(moment(invoiceRequestMonth, 'YYYY-MM').startOf("month")).toISOString();
+    let endDate = new Date(moment(invoiceRequestMonth, 'YYYY-MM').endOf("month")).toISOString();
+    console.log(startDate, endDate);
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`;
     invoiceRequestQuery.mutate(searchParams);
   }
 
   const fetchAchievements = ()=>{
-    let startDate = new Date(moment(achievementMonth, 'YYYY-MMM').startOf("month")).toISOString();
-    let endDate = new Date(moment(achievementMonth, 'YYYY-MMM').endOf("month")).toISOString();
+    let startDate = new Date(moment(achievementMonth, 'YYYY-MM').startOf("month")).toISOString();
+    let endDate = new Date(moment(achievementMonth, 'YYYY-MM').endOf("month")).toISOString();
+    console.log(startDate, endDate);
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}&month=${achievementMonth}`;
     achievementQuery.mutate(searchParams);
   }
 
   const fetchCustomerVisits = ()=>{
     console.log(customerVisitDate)
-    let startDate = new Date(moment(customerVisitDate, 'YYYY-MMM-DD').startOf("day")).getTime();
-    let endDate = new Date(moment(customerVisitDate, 'YYYY-MMM-DD').endOf("day")).getTime();
+    let startDate = new Date(moment(customerVisitDate, 'YYYY-MM-DD').startOf("day")).getTime();
+    let endDate = new Date(moment(customerVisitDate, 'YYYY-MM-DD').endOf("day")).getTime();
+    console.log(startDate, endDate);
     let searchParams = `employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`;
     customerVisitQuery.mutate(searchParams);
   }
@@ -217,6 +220,7 @@ export default function Home() {
     if(employeeId !== null && achievementMonth){
       fetchAchievements()
     }
+    console.log("achievementMonth:", achievementMonth)
   }, [employeeId, achievementMonth])
 
   useEffect(()=>{
@@ -326,13 +330,19 @@ export default function Home() {
                   <div className='d-flex align-items-center'>
                     <h5 className="card-title fw-semibold me-auto mb-0"> Achievements </h5>
                     <div className='d-flex'>
-                      <input type="month" className="form-control" id="achievementMonth" value={achievementMonth} onChange={(e) => setAchievementMonth(e.target.value)} />
+                      <input type="month" className="form-control" id="achievementMonth" value={achievementMonth} onChange={(e) => {
+                          /* let month = e.target.value;
+                          let monthString = `${month.split("-")[1].length < 2 ? month.split("-")[0] + "-" + "0" + month.split("-")[1] : month.split("-")[0] + "-" + month.split("-")[1]}`;
+                          
+                          return console.log(monthString) */
+                          setAchievementMonth(e.target.value)
+                        }} />
                     </div>
                   </div>
                 </div>
-                <div className='col-12'>
+                {/* <div className='col-12'>
                   <h5>Select Employee to view achievements</h5>
-                </div>
+                </div> */}
                 <div className="col-6">
                   <div className="d-flex flex-column pb-1">
                     <h6 className='text-start mb-1'>Month Target</h6>

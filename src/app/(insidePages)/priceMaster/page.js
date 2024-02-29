@@ -99,11 +99,11 @@ const PriceMaster = () =>{
     if(!anyPromo){
       result.price = unitPrice
       result.promoActive = false;
-      result.promoPrice = "---"
+      result.promoPrice = ""
     }else if(currentDateString >= validTillString){
       result.price = unitPrice
       result.promoActive = false;
-      result.promoPrice = "---"
+      result.promoPrice = ""
     }else if(currentDateString < validTillString){
       result.price = unitPrice
       result.promoActive = true;
@@ -129,7 +129,7 @@ const PriceMaster = () =>{
             <h6 className="fw-semibold m-0">{formatAsCurrency(unitPrice)}</h6>
           </td>
           <td className="border-bottom-0">
-            <h6 className="fw-semibold m-0">{formatAsCurrency(deriveProductStatus(unitPrice, promoPrice, validTill, anyPromo).promoPrice)}</h6>
+            <h6 className="fw-semibold m-0">{formatAsCurrency(deriveProductStatus(unitPrice, promoPrice, validTill, anyPromo).promoPrice) || "---"}</h6>
           </td>
           <td className="border-bottom-0">
             <h6 className="fw-semibold m-0">{vatInclusive ? `Yes - ${vatRate}` : "No"}</h6>

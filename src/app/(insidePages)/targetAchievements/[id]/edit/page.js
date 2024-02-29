@@ -16,6 +16,7 @@ const EditMonthlyTarget = () =>{
   const router = useRouter();
 
   const [formData, setFormData] = useState({
+    employeeId: "",
     month: "",
     target: "",
   })
@@ -41,10 +42,10 @@ const EditMonthlyTarget = () =>{
 
   useEffect(()=>{
     if(data){
-      const {month, target} = data
+      const {month, target, employeeId} = data
       setFormData( prevState =>({
         ...prevState,
-        month, target
+        month, target, employeeId
       }))
     }
   }, [data])
@@ -55,12 +56,32 @@ const EditMonthlyTarget = () =>{
     if((prop === "target") && !onlyNumbersRegex.exec(event.target.value)){
       return;
     }
-
-    
     setFormData(prevState => ({
       ...prevState,
       [prop]: event.target.value
     }))
+  }
+
+  const employeeQuery = useQuery({
+    queryKey: ["allEmployees"],
+    queryFn: () => apiGet({ url: "/employee?isActive=true" })
+      .then(res => {
+        console.log(res)
+        return res.data
+      })
+      .catch(error => {
+        console.log(error)
+        dispatchMessage({ severity: "error", message: error.message })
+        return []
+      }),
+      staleTime: Infinity,
+      retry: 3
+  })
+
+  const listEmployees = () =>{
+    return employeeQuery?.data.map(employee =>
+      <option key={employee.id} value={employee.id}>{employee.firstName} {employee.middleName[0]} {employee.lastName}</option>
+    )
   }
 
   const queryClient = useQueryClient();
@@ -81,7 +102,7 @@ const EditMonthlyTarget = () =>{
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
-    let errors = formValidator(["month", "target"], formData);
+    let errors = formValidator(["month", "target", "employeeId"], formData);
     if(Object.keys(errors).length){
       dispatchMessage({ severity: "error", message: "Some required fields are empty" })
       return setErrors(errors);
@@ -104,6 +125,14 @@ const EditMonthlyTarget = () =>{
                 <h5 className="card-title fw-semibold mb-4 opacity-75">Edit Monthly Target Details</h5>
                 <form>
                   <div className="mb-3">
+                    <label htmlFor="employeeId" className="form-label">Employee</label>
+                    <select className="form-select shadow-none" id="employeeId" value={formData.employeeId} onChange={handleChange("employeeId")} aria-label="Default select example">
+                      <option value="">Select Employee</option>
+                      {!employeeQuery.isLoading && listEmployees()}
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
                     <label htmlFor="month" className="form-label">Month (<span className='fst-italic text-warning'>required</span>)</label>
                     <input type="month" className="form-control" id="month" value={formData.month} onChange={handleChange("month")} />
                     <span className="text-danger font-monospace small">{errors?.month}</span>
@@ -114,6 +143,7 @@ const EditMonthlyTarget = () =>{
                     <input type="text" className="form-control" id="target" value={formData.target} onChange={handleChange("target")} />
                     <span className="text-danger font-monospace small">{errors?.target}</span>
                   </div>
+                  
                   <div className="mt-5">
                     <button type="submit" className="btn btn-primary px-5 py-2" disabled={isLoading || isFetching} onClick={handleSubmit}>{isLoading ? "Loading..." : "Submit"}</button>
                     <a className="btn btn-outline-primary px-5 py-2 ms-3" href="/targetAchievements">Cancel</a>

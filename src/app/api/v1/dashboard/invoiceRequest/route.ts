@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     const employeeId = searchParams.get('employeeId');
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
-  
+    
     const data = await prisma.invoiceRequestForm.findMany({
       where: {
         ...(employeeId && { employeeId }),

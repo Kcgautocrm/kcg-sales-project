@@ -4,7 +4,7 @@ import formatMonth from "@/services/formatMonth";
 import authService from "@/services/authService";
 
 
-let routeName = "Monthly Targets"
+let routeName = "Monthly Target"
 export async function GET(request: Request) {
   try {
     const token = (request.headers.get("Authorization") || "").split("Bearer ").at(1) as string;
@@ -18,9 +18,16 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || "1");
     const take = parseInt(searchParams.get('take') || "");
+    const month = searchParams.get("month");
+    const employeeId = searchParams.get("employeeId");
+    console.log(month)
   
     let myCursor = "";
     const data = await prisma.monthlyTarget.findMany({
+      where: {
+        ...(month && {month}),
+        ...(employeeId && {employeeId})
+      },
       ...(Boolean(take) && {take}),
       ...((Boolean(page) && Boolean(take)) && {skip: (page - 1) * take}),
       ...(myCursor !== "" && {
@@ -28,6 +35,15 @@ export async function GET(request: Request) {
           id: myCursor,
         }
       }),
+      include: {
+        employee: {
+          include: {
+            invoiceRequestForms: {
+              where: {approved: true}
+            }
+          }
+        }
+      },
       orderBy: {
         createdAt: "desc"
       }
@@ -86,11 +102,23 @@ export async function POST(request: Request) {
 
     const json = await request.json();
     // validate data here
+    let dataExists = await prisma.monthlyTarget.findFirst({
+      where: {
+        employeeId: json?.employeeId,
+        month: json?.month
+      }
+    })
+    if(dataExists){
+      return new NextResponse(JSON.stringify({ message: `Target already set for employee in ${formatMonth(new Date(json?.month).getMonth())} ${new Date(json?.month).getFullYear()}` }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      }); 
+    }
     const data = await prisma.monthlyTarget.create({
       data: json,
     });
     await prisma.notification.create({
-      data: {title: "Monthly Target", staffCadre: "salesPerson", resourceUrl: `/targetAchievements/${data.id}`, message: `Monthly Target for ${data.month} has been set.` }
+      data: {title: "Monthly Target", receiverId: data?.employeeId, resourceUrl: `/targetAchievements/${data.id}`, message: `Your Monthly Target for ${formatMonth(new Date(data?.month).getMonth())} ${new Date(data?.month).getFullYear()} has been set.` }
     })
     return new NextResponse(JSON.stringify({ message: `${routeName} Created successfully`, data }), { 
      status: 201, 
