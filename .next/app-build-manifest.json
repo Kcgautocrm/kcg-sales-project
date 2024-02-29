@@ -1,65 +1,45 @@
 {
   "pages": {
-    "/layout": [
+    "/(insidePages)/targetAchievements/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
+      "static/chunks/app/(insidePages)/targetAchievements/page.js"
     ],
     "/(insidePages)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
     ],
-    "/(insidePages)/targetAchievements/page": [
+    "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/targetAchievements/page.js"
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/(insidePages)/targetAchievements/add/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/targetAchievements/add/page.js"
     ],
     "/(insidePages)/targetAchievements/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/targetAchievements/[id]/page.js"
     ],
-    "/(insidePages)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/page.js"
-    ],
-    "/(insidePages)/marketingActivities/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/marketingActivities/page.js"
-    ],
-    "/(insidePages)/invoiceRequests/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/invoiceRequests/page.js"
-    ],
     "/(auth)/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/login/page.js"
     ],
-    "/(insidePages)/invoiceRequests/[id]/page": [
+    "/(insidePages)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/invoiceRequests/[id]/page.js"
+      "static/chunks/app/(insidePages)/page.js"
     ],
     "/(insidePages)/customers/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/customers/page.js"
-    ],
-    "/(insidePages)/visits/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/visits/page.js"
-    ],
-    "/(insidePages)/visits/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/visits/[id]/page.js"
     ]
   }
 }
