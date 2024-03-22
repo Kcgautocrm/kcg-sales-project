@@ -6,7 +6,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 type LoginCredentials = {
-  oldPassword: string, 
   newPassword: string, 
   confirmPassword: string
 }
@@ -40,13 +39,13 @@ export async function POST(request: Request) {
         }); 
       }
       // verify password
-      let isValid = bcrypt.compare(data.oldPassword, employee.password)
+      /* let isValid = bcrypt.compare(data.oldPassword, employee.password)
       if(!isValid){
         return new NextResponse(JSON.stringify({message: "Old password is not valid"}), {
           status: 400,
           headers: { "Content-Type": "application/json" },
         }); 
-      }
+      } */
       // hash password
       let encryptedPassword
       if(typeof data.newPassword === "string") encryptedPassword = await bcrypt.hash(data.newPassword, 10);
