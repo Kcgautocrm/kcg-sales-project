@@ -64,7 +64,7 @@ const useGetUserData = () => {
             }
             if (viewOnly) {
                 for (let i = 0; i < viewOnly.length; i++) {
-                    if (pathName.includes(viewOnly[i]) && (pathName.includes("add") || pathName.includes("edit"))) {
+                    if (pathName.includes(viewOnly[i]) && (pathName.includes("/add") || pathName.includes("/edit"))) {
                         setIsAllowed(false);
                         return router.push("/")
                     }

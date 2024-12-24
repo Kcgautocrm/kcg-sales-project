@@ -19,7 +19,34 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
 
+    const employeeId = searchParams.get('employeeId');
+    const customerId = searchParams.get('customerId');
+    const contactPersonId = searchParams.get('contactPersonId');
+    const brandId = searchParams.get('brandId');
+    const productId = searchParams.get('productId');
+    const pfiReferenceNumber = searchParams.get('pfiReferenceNumber');
+    const locked = searchParams.get('locked');
+    let approved: any = searchParams.get('approved');
+
+    if(approved === "approved"){
+      approved = true
+    }else if(approved === "unApproved"){
+      approved = false
+    }else{
+      approved === null
+    }
+
     let data = await prisma.pfiRequestForm.findMany({
+      where: {
+        ...(locked && {locked: true}),
+        ...(employeeId && { employeeId }),
+        ...(customerId && { customerId }),
+        ...(contactPersonId && { contactPersonId }),
+        ...(brandId && { brandId }),
+        ...(productId && { productId }),
+        ...(pfiReferenceNumber && { pfiReferenceNumber: { contains: pfiReferenceNumber, mode: 'insensitive' } }),
+        ...(approved === null ? { OR: [{ approved: true }, { approved: false },] } : { approved }),
+      },
         include: {
             employee: {
                 select: {

@@ -18,11 +18,15 @@ export async function GET(request: Request) {
     }
 
     const { searchParams } = new URL(request.url);
+    const employeeId = searchParams.get('employeeId');
+    const isActive = searchParams.get("isActive");
     const customerId = searchParams.get('customerId') ;
 
     let data = await prisma.contactPerson.findMany({
       where: {
-        ...(customerId && {customerId}) 
+        ...(customerId && {customerId}),
+        ...(employeeId && {employeeId}),
+        ...(isActive && {isActive: true})
       },
       include: {
         employee: {

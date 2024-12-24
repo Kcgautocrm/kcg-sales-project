@@ -189,11 +189,15 @@ const PriceMaster = () =>{
     <div className="container-fluid">
       <header className="d-flex align-items-center mb-4">
         <h4 className="m-0">Price Master</h4>
-        <a className="btn btn-link text-primary ms-auto" href="/priceMaster/add">Add</a>
+        
         {userData?.staffCadre?.includes("admin") &&
-          <button type="button" className="btn btn-secondary px-5 py-2 ms-3" disabled={allPriceMasterQuery?.isFetching} onClick={() => allPriceMasterQuery.refetch()}>
-            {allPriceMasterQuery?.isFetching ? "Fetching..." : "Download As Excel"}
-          </button>}
+          <>
+            <a className="btn btn-link text-primary ms-auto" href="/priceMaster/add">Add</a>
+            <button type="button" className="btn btn-secondary px-5 py-2 ms-3" disabled={allPriceMasterQuery?.isFetching} onClick={() => allPriceMasterQuery.refetch()}>
+              {allPriceMasterQuery?.isFetching ? "Fetching..." : "Download As Excel"}
+            </button>
+          </>
+        }
       </header>
 
       <div className="row">

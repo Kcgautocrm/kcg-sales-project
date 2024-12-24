@@ -43,6 +43,7 @@ export async function GET(request: Request) {
         ...(approved === null ? { OR: [{ approved: true }, { approved: false },] } : { approved }),
         ...(state && { state }),
         ...(companyName && { companyName: { contains: companyName, mode: 'insensitive' } }),
+        visitReports: { some: {}}
       },
       ...(Boolean(take) && {take}),
       ...((Boolean(page) && Boolean(take)) && {skip: (page - 1) * take}),
@@ -87,6 +88,7 @@ export async function GET(request: Request) {
         ...(approved === null ? { OR: [{ approved: true }, { approved: false },] } : { approved }),
         ...(state && { state }),
         ...(companyName && { companyName: { contains: companyName, mode: 'insensitive' } }),
+        visitReports: { some: {}}
       },
       include: {
         _count: {

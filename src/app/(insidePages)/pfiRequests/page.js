@@ -147,7 +147,7 @@ const PfiRequests = () =>{
 
   const customerQuery = useQuery({
     queryKey: ["allCustomers"],
-    queryFn: () => apiGet({ url: `/customer?approved=approved`})
+    queryFn: () => apiGet({ url: `/customer?approved=approved&orderBy=name`})
       .then(res => {
         console.log(res)
         return res.data
@@ -266,7 +266,7 @@ const PfiRequests = () =>{
 
   const fetchPfiRequests = (queryString) =>{
     setIsLoading(true)
-    apiGet({ url: `/pfiRequestForm?${userData?.staffCadre?.includes("admin") && "locked=true"}&${queryString}&page=${page}&take=${20}` })
+    apiGet({ url: `/pfiRequestForm?${userData?.staffCadre?.includes("admin") ? "locked=true&" : ""}${queryString}&page=${page}&take=${20}` })
     .then(res => {
       console.log(res)
       setListMetaData(prevState => ({
@@ -352,9 +352,24 @@ const PfiRequests = () =>{
     })
   }
 
+  const getExcelQueryString = () =>{
+    let queryString = "";
+    if(userData?.id){
+      let data = {...formData};
+      if(userData?.staffCadre?.includes("salesPerson")){
+        data.employeeId = employeeId || userData?.id
+      }
+      if(userData?.staffCadre?.includes("admin")){
+        data.locked = "locked"
+      }
+      queryString = generateQueryString(data)
+    }
+    return queryString
+  }
+
   const allPfiRequestsQuery = useQuery({
     queryKey: ["allPfiRequests-excel" ],
-    queryFn:  ()=>apiGet({ url: `/pfiRequestForm/excel`})
+    queryFn:  ()=>apiGet({ url: `/pfiRequestForm/excel?${getExcelQueryString()}`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)
@@ -373,8 +388,6 @@ const PfiRequests = () =>{
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "PfiRequestForm-DataSheet.xlsx");
   };
 

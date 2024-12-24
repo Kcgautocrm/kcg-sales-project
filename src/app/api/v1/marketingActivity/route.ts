@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || "1");
-    const take = parseInt(searchParams.get('take') || "");
+    const take = parseInt(searchParams.get('take') || "20");
     const employeeId = searchParams.get('employeeId');
     let approved: any = searchParams.get('approved');
 

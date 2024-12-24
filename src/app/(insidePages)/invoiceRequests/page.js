@@ -359,11 +359,21 @@ const InvoiceRequests = () =>{
     })
   }
 
-
+  const getExcelQueryString = () =>{
+    let queryString = "";
+    if(userData?.id){
+      let data = {...formData};
+      if(userData?.staffCadre?.includes("salesPerson")){
+        data.employeeId = employeeId || userData?.id
+      }
+      queryString = generateQueryString(data)
+    }
+    return queryString
+  }
 
   const allInvoiceRequestsQuery = useQuery({
     queryKey: ["allInvoiceRequests-excel" ],
-    queryFn:  ()=>apiGet({ url: `/invoiceRequestForm/excel`})
+    queryFn:  ()=>apiGet({ url: `/invoiceRequestForm/excel?${getExcelQueryString()}`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)
@@ -382,8 +392,6 @@ const InvoiceRequests = () =>{
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "InvoiceRequest-DataSheet.xlsx");
   };
 

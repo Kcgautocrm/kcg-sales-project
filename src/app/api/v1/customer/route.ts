@@ -23,6 +23,7 @@ export async function GET(request: Request) {
     const state = searchParams.get('state');
     const companyName = searchParams.get('companyName');
     const isActive = searchParams.get("isActive");
+    const orderBy = searchParams.get("orderBy");
 
     if(approved === "approved"){
       approved = true
@@ -52,7 +53,7 @@ export async function GET(request: Request) {
         employee: true,
       },
       orderBy: {
-        createdAt: "desc"
+        ...( orderBy === "name" ? { companyName: "asc"} : {createdAt: "desc"})
       }
     })
     if(!data){

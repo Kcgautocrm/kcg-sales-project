@@ -107,11 +107,11 @@ const Customers = () => {
     return queryString
   }
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [allCustomers, setAllCustomers] = useState([]);
 
   const fetchAllCustomers = (queryString) =>{
-    setIsLoading(true)
+    //setIsLoading(true)
     apiGet({ url: `/customer?${queryString}&page=${page}&take=${20}` })
     .then(res => {
       console.log(res)
@@ -190,7 +190,7 @@ const Customers = () => {
   }
 
   const listCustomers = () => {
-    return allCustomers.map((item, index) => {
+    return allCustomers?.map((item, index) => {
       const { id, companyName, state, employee, approved } = item;
       return (
         <tr key={id} className="hover">
@@ -223,7 +223,7 @@ const Customers = () => {
 
   const allCustomersQuery = useQuery({
     queryKey: ["allCustomers-excel" ],
-    queryFn:  ()=>apiGet({ url: `/customer/excel`})
+    queryFn:  ()=>apiGet({ url: `/customer/excel?${getQueryStringForExcelDownload()}`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)
@@ -236,6 +236,36 @@ const Customers = () => {
     }),
     enabled: false
   })
+
+  const allContactPersonsQuery = useQuery({
+    queryKey: ["allContactPersons-excel" ],
+    queryFn:  ()=>apiGet({ url: `/contactPerson/excel?${getQueryStringForExcelDownload()}`})
+    .then(res => {
+      console.log(res)
+      downloadExcel(res.data, "ContactPersons-DataSheet.xlsx")
+      return res.data
+    })
+    .catch(error =>{
+      console.log(error)
+      dispatchMessage({severity: "error", message: error.message})
+      return []
+    }),
+    enabled: false
+  })
+
+  const getQueryStringForExcelDownload = () =>{
+    let queryString = ""
+    if(userData?.id){
+      let data = {...formData};
+      if(userData?.staffCadre?.includes("salesPerson")){
+        data.employeeId = employeeId || userData?.id
+      }
+      queryString = generateQueryString(data)
+    }
+    return queryString
+  }
+
+  
 
 
   const downloadExcel = (data, fileName = "Customer-DataSheet.xlsx") => {
@@ -259,21 +289,7 @@ const Customers = () => {
     return result
   }
 
-  const allContactPersonsQuery = useQuery({
-    queryKey: ["allContactPersons-excel" ],
-    queryFn:  ()=>apiGet({ url: `/contactPerson/excel`})
-    .then(res => {
-      console.log(res)
-      downloadExcel(res.data, "ContactPersons-DataSheet.xlsx")
-      return res.data
-    })
-    .catch(error =>{
-      console.log(error)
-      dispatchMessage({severity: "error", message: error.message})
-      return []
-    }),
-    enabled: false
-  })
+  
 
 
   return (

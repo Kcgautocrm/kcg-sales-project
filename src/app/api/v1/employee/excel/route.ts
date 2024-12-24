@@ -19,7 +19,31 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
 
+    const companyId = searchParams.get('companyId');
+    const branchId = searchParams.get('branchId');
+    let staffCadre : any = searchParams.get('staffCadre');
+    const firstName = searchParams.get('firstName');
+    const lastName = searchParams.get('lastName');
+    const isActive = searchParams.get("isActive");
+    
+
+    if(staffCadre === "admin"){
+      staffCadre = {equals: ["admin"]}
+    }else if (staffCadre === "supervisor,salesPerson"){
+      staffCadre = {equals: ["supervisor", "salesPerson"]}
+    }else if(staffCadre === "salesPerson") {
+      staffCadre = {equals: ["salesPerson"]}
+    }
+
     let data = await prisma.employee.findMany({
+      where: {
+        ...(isActive && {isActive: true}),
+        ...(companyId && { companyId }),
+        ...(branchId && { branchId }),
+        ...(firstName && { firstName: { contains: firstName, mode: 'insensitive' } }),
+        ...(lastName && { lastName: { contains: lastName, mode: 'insensitive' } }),
+        ...(staffCadre && {staffCadre})
+      },
         include: {
             company: {
                 select: {

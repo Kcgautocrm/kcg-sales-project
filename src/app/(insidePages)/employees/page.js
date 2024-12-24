@@ -253,7 +253,7 @@ const Employees = () =>{
 
   const allEmployeesQuery = useQuery({
     queryKey: ["allEmployees-excel" ],
-    queryFn:  ()=>apiGet({ url: `/employee/excel`})
+    queryFn:  ()=>apiGet({ url: `/employee/excel?${queryUrlString}`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)
@@ -272,8 +272,6 @@ const Employees = () =>{
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "Employee-DataSheet.xlsx");
   };
 

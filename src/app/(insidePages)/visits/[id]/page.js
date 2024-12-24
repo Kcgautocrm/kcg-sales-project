@@ -3,7 +3,7 @@
 import Skeleton from '@mui/material/Skeleton';
 import { getDecodedToken } from "@/services/localStorageService";
 import CommentItem from "@/components/commentItem";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useGetComments from "@/hooks/useGetComments";
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
@@ -88,6 +88,7 @@ const FollowUpLoadingFallBack = () =>{
 
 const VisitReportDetails = () => {
   const params = useParams();
+  const router = useRouter();
   const { id } = params;
   const dispatchMessage = useDispatchMessage();
   const pathName = usePathname();
@@ -297,7 +298,7 @@ const VisitReportDetails = () => {
     <div className="container-fluid">
       <header className="d-flex align-items-center mb-4">
         <h4 className="m-0">Visit Reports</h4>
-        <span className="breadcrumb-item ms-3"><a href="/visits"><i className="fa-solid fa-arrow-left me-1"></i> Back</a></span>
+        <span className="breadcrumb-item ms-3 text-primary cursor-pointer"><a onClick={()=>router.back()}><i className="fa-solid fa-arrow-left me-1"></i> Back</a></span>
       </header>
 
       <div className="row">

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         headers: { "Content-Type": "application/json" },
       }); 
     }
-    if (user && (await bcrypt.compare(data.password as string, user.password as string))) {
+    if (user && (await bcrypt.compare(data.password as string, user.password as string))) { 
       
       // Create token
       const token = jwt.sign(

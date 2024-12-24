@@ -27,6 +27,7 @@ const EditEmployee = () => {
     middleName: "",
     lastName: "",
     email: "",
+    password: "",
     employmentDate: "",
     brandsAssigned: [],
     isActive: true
@@ -308,6 +309,11 @@ const EditEmployee = () => {
                   <label htmlFor="email" className="form-label">Email Address (<span className='fst-italic text-warning'>required</span>)</label>
                   <input type="email" className="form-control shadow-none" id="email" onChange={handleChange("email")} value={formData.email} placeholder="Enter your email address" />
                   <span className='text-danger font-monospace small'>{errors.email}</span>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">Password (<span className='fst-italic text-warning'>required</span>)</label>
+                  <input type="password" className="form-control shadow-none" id="password" onChange={handleChange("password")} value={formData.password} placeholder="Enter your new password" />
+                  <span className='text-danger font-monospace small'>{errors.password}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="supervisorId" className="form-label">Supervisor</label>

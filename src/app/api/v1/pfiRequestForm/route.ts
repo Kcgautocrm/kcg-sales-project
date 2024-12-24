@@ -17,8 +17,9 @@ export async function GET(request: Request) {
 
 
     const { searchParams } = new URL(request.url);
+    console.log(searchParams);
     const page = parseInt(searchParams.get('page') || "1");
-    const take = parseInt(searchParams.get('take') || "");
+    const take = parseInt(searchParams.get('take') || "20");
 
     const employeeId = searchParams.get('employeeId');
     const customerId = searchParams.get('customerId');
@@ -68,6 +69,8 @@ export async function GET(request: Request) {
         createdAt: "desc"
       }
     })
+   
+    console.log("customerId", customerId);
     if(!data){
       return new NextResponse(JSON.stringify({ message: `Failed to fetch ${routeName} list`, data: null}), {
         status: 400,
@@ -86,10 +89,10 @@ export async function GET(request: Request) {
         ...(approved === null ? { OR: [{ approved: true }, { approved: false },] } : { approved }),
       }
     })
-    const lastItemInData = data[(page * take) - 1] // Remember: zero-based index! :)
-    myCursor = lastItemInData?.id // Example: 29
+    const lastItemInData = data[(page * take) - 1]
+    myCursor = lastItemInData?.id 
   
-    return new NextResponse(JSON.stringify({page, take, totalCount, message: `${routeName} list fetched successfully`, data }), {
+    return new NextResponse(JSON.stringify({page, take, totalCount, message: `${routeName} listed successfully`, data }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     }); 

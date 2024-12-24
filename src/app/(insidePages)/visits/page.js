@@ -56,6 +56,9 @@ const VisitReports = () => {
   const { userData } = useGetUserData();
   const searchParams = useSearchParams();
   const employeeId = searchParams.get("employeeId");
+  const companyName = searchParams.get("companyName");
+  const approved = searchParams.get("approved");
+  const state = searchParams.get("state");
   const [showFilters, setShowFilters] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -171,7 +174,11 @@ const VisitReports = () => {
 
   useEffect(()=>{
     if(userData?.id){
-      let data = {...formData};
+      setFormData( prevState => ({
+        ...prevState,
+        employeeId: employeeId || "", companyName: companyName || "", state: state || "", approved: approved || ""
+      }))
+      let data = {...formData, employeeId, companyName, state, approved};
       if(userData?.staffCadre?.includes("salesPerson")){
         data.employeeId = employeeId || userData?.id
         setFormData(data);
@@ -181,6 +188,7 @@ const VisitReports = () => {
     }
   }, [userData, page])
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if(userData?.id){
@@ -188,7 +196,8 @@ const VisitReports = () => {
       if(userData?.staffCadre?.includes("salesPerson")){
         data.employeeId = employeeId || userData?.id
       }
-      let queryString = generateQueryString(data)
+      let queryString = generateQueryString(data);
+      router.push(`/visits?${queryString}`);
       fetchAllVisitReports(queryString);
     }
   }
@@ -238,9 +247,21 @@ const VisitReports = () => {
     })
   }
 
+  const getExcelQueryString = () =>{
+    let queryString = "";
+    if(userData?.id){
+      let data = {...formData};
+      if(userData?.staffCadre?.includes("salesPerson")){
+        data.employeeId = employeeId || userData?.id
+      }
+      queryString = generateQueryString(data)
+    }
+    return queryString
+  }
+
   const allVisitReportsQuery = useQuery({
     queryKey: ["allVisitReports-excel" ],
-    queryFn:  ()=>apiGet({ url: `/visitReport/excel`})
+    queryFn:  ()=>apiGet({ url: `/visitReport/excel?${getExcelQueryString()}`})
     .then(res => {
       console.log(res)
       downloadExcel(res.data)
@@ -259,8 +280,6 @@ const VisitReports = () => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "VisitReport-DataSheet.xlsx");
   };
 
@@ -329,10 +348,10 @@ const VisitReports = () => {
                 <div className="gap-2 d-md-flex col-12 align-items-center mt-5">
                   <button type="submit" className="btn btn-primary px-5 py-2" disabled={isLoading} onClick={handleSubmit}>{isLoading ? "Filtering..." : "Filter"}</button>
                   <a className="btn btn-outline-primary px-5 py-2 ms-3" onClick={() => setShowFilters(false)}>Cancel</a>
-                  {userData?.staffCadre?.includes("admin") &&
-                    <button type="button" className="btn btn-secondary px-5 py-2 ms-auto mt-3 mt-md-0" disabled={allVisitReportsQuery?.isFetching} onClick={() => allVisitReportsQuery.refetch()}>
-                      {allVisitReportsQuery?.isFetching ? "Fetching..." : "Download As Excel"}
-                    </button>}
+                  
+                  <button type="button" className="btn btn-secondary px-5 py-2 ms-auto mt-3 mt-md-0" disabled={allVisitReportsQuery?.isFetching} onClick={() => allVisitReportsQuery.refetch()}>
+                    {allVisitReportsQuery?.isFetching ? "Fetching..." : "Download As Excel"}
+                  </button>
                 </div>
               </form>
             </div>

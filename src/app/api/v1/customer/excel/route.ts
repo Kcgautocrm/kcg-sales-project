@@ -17,9 +17,23 @@ export async function GET(request: Request) {
       }); 
     }
 
+
     const { searchParams } = new URL(request.url);
+    
+    const employeeId = searchParams.get('employeeId');
+    let approved: any = searchParams.get('approved');
+    const state = searchParams.get('state');
+    const companyName = searchParams.get('companyName');
+    const isActive = searchParams.get("isActive");
 
     let data = await prisma.customer.findMany({
+      where: {
+        ...(isActive && {isActive: true}),
+        ...(employeeId && { employeeId }),
+        ...(approved === null ? { OR: [{ approved: true }, { approved: false },] } : { approved }),
+        ...(state && { state }),
+        ...(companyName && { companyName: { contains: companyName, mode: 'insensitive' } }),
+      },
         include: {
             employee: {
                 select: {

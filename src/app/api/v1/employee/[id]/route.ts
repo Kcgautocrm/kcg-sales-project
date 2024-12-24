@@ -3,6 +3,7 @@ import { UUID } from "crypto";
 import { NextResponse } from "next/server";
 import authService from "@/services/authService";
 import generateDeleteResourceMsg from "@/services/generateDeleteResourceMsg";
+import bcrypt from 'bcryptjs';
 
 let modelName = "Employee"
 export async function GET(
@@ -30,6 +31,7 @@ export async function GET(
         branch: true,
       }
     });
+    if(data) data.password = ""
     const supervisor =  await prisma.employee.findUnique({
       where: {
         id: (data?.supervisorId === null ? "" : data?.supervisorId) as string 
@@ -74,11 +76,14 @@ export async function PATCH(
       }); 
     }
     const id = params.id;
-    let json = await request.json();
+    let data = await request.json();
+    let encryptedPassword;
+    if(data.password) encryptedPassword = await bcrypt.hash(data.password, 10);
+    if(encryptedPassword) data.password = encryptedPassword;
 
     const updatedData = await prisma.employee.update({
       where: { id },
-      data: json,
+      data: data,
     });
 
     if (!updatedData) {

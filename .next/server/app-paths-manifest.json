@@ -1,5 +1,4 @@
 {
-  "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/(insidePages)/profile/page": "app/(insidePages)/profile/page.js",
-  "/(insidePages)/page": "app/(insidePages)/page.js"
+  "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
+  "/(insidePages)/pfiRequests/[id]/page": "app/(insidePages)/pfiRequests/[id]/page.js"
 }
