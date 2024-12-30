@@ -12,127 +12,124 @@ model Company {
   code      String?    @unique @db.VarChar(50)
   name      String     @unique @db.VarChar(50)
   logo      String?    @db.VarChar(255)
-  email     String?     @unique @db.VarChar(50)
+  email     String?    @unique @db.VarChar(50)
   address   String?    @db.VarChar(1000)
-  brands    String[]
   extraData Json?
-  branches  Branch[]
-  employees Employee[]
-  isActive  Boolean    @default(true)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  brands    String[]
+  isActive  Boolean    @default(true)
+  branches  Branch[]
+  employees Employee[]
 }
 
 model Branch {
   id           String     @id @default(uuid())
-  company      Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String
   state        String     @db.VarChar(50)
-  lga          String?     @db.VarChar(50)
+  lga          String?    @db.VarChar(50)
   name         String     @db.VarChar(50)
   code         String?    @unique @db.VarChar(255)
   address      String     @db.VarChar(1000)
   isHeadOffice Boolean    @default(false)
   phoneNumber  String?    @db.VarChar(50)
-  email        String?     @db.VarChar(50)
-  employees    Employee[]
+  email        String?    @db.VarChar(50)
   extraData    Json?
-  isActive     Boolean    @default(true)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+  isActive     Boolean    @default(true)
+  company      Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employees    Employee[]
 }
 
 model Brand {
-  id                  String                   @id @default(uuid())
-  name                String                   @unique @db.VarChar(50)
-  code                String?                  @unique @db.VarChar(50)
-  description         String?                  @db.VarChar(1000)
-  logo                String?                  @db.VarChar(255)
-  products            Product[]
-  prices              PriceMaster[]
-  pfiRequestForms     PfiRequestForm[]
-  invoiceRequestForms InvoiceRequestForm[]
+  id                  String               @id @default(uuid())
+  name                String               @unique @db.VarChar(50)
+  code                String?              @unique @db.VarChar(50)
+  description         String?              @db.VarChar(1000)
+  logo                String?              @db.VarChar(255)
   extraData           Json?
-  isActive            Boolean                  @default(true)
-  createdAt           DateTime                 @default(now())
-  updatedAt           DateTime                 @updatedAt
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  isActive            Boolean              @default(true)
+  invoiceRequestForms InvoiceRequestForm[]
+  pfiRequestForms     PfiRequestForm[]
+  prices              PriceMaster[]
+  products            Product[]
 }
 
 model Product {
-  id                  String                @id @default(uuid())
-  name                String                @db.VarChar(50)
-  code                String?               @unique @db.VarChar(50)
-  brand               Brand                 @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  id                  String               @id @default(uuid())
+  name                String               @db.VarChar(50)
+  code                String?              @unique @db.VarChar(50)
   brandId             String
-  description         String?               @db.VarChar(1000)
-  specifications      String?               @db.VarChar(1000)
+  description         String?              @db.VarChar(1000)
+  specifications      String?              @db.VarChar(1000)
   brochures           String[]
-  images              String[]              @db.VarChar(2000)
-  price               PriceMaster?
-  pfiRequestForms     PfiRequestForm[]
-  invoiceRequestForms InvoiceRequestForm[]
-  vatInclusive        Boolean?              @default(false)
-  vatRate             String?               @db.VarChar(50)
+  images              String[]             @db.VarChar(2000)
+  vatInclusive        Boolean?             @default(false)
+  vatRate             String?              @db.VarChar(50)
   extraData           Json?
-  isActive            Boolean               @default(true)
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  isActive            Boolean              @default(true)
+  invoiceRequestForms InvoiceRequestForm[]
+  pfiRequestForms     PfiRequestForm[]
+  price               PriceMaster?
+  brand               Brand                @relation(fields: [brandId], references: [id], onDelete: Cascade)
 }
 
 model PriceMaster {
-  id         String    @id @default(uuid())
-  unitPrice  String    @db.VarChar(50)
-  promoPrice String?   @db.VarChar(50)
-  anyPromo   Boolean   @default(false)
-  promoText  String?   @db.VarChar(1000)
-  validFrom  String?
-  validTill  String?
-  brand      Brand     @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  brandId    String    
-  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId  String    @unique
-  vatInclusive Boolean @default(false)
-  vatRate    String?  
-  isActive   Boolean   @default(true)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id           String   @id @default(uuid())
+  unitPrice    String   @db.VarChar(50)
+  promoPrice   String?  @db.VarChar(50)
+  validFrom    String?
+  validTill    String?
+  productId    String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  brandId      String
+  promoText    String?  @db.VarChar(1000)
+  anyPromo     Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  vatInclusive Boolean  @default(false)
+  vatRate      String?
+  brand        Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Employee {
-  id                    String                   @id @default(uuid())
-  company               Company                  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId             String
-  branch                Branch                   @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  branchId              String
-  staffCadre            String[]                 @default(["salesPerson"])
-  firstName             String                   @db.VarChar(50)
-  middleName            String?                  @db.VarChar(50)
-  lastName              String                   @db.VarChar(50)
-  email                 String                   @unique @db.VarChar(50)
-  password              String                   @db.VarChar(255)
-  supervisorId          String?
-  employmentDate        String?                  @db.VarChar(50)
-  brandsAssigned        String[]
-  customers             Customer[]
-  contactPersons        ContactPerson[]
-  visitReports          VisitReport[]
-  pfiRequestForms       PfiRequestForm[]
-  invoiceRequestForms   InvoiceRequestForm[]
-  MarkettingActivities  MarkettingActivity[]
-  monthlyTargets        MonthlyTarget[]
-  sentComments          Comment[]               @relation("Sender")
-  receivedComments      Comment[]               @relation("Receiver")
-  extraData             Json?
-  isActive              Boolean                 @default(true)
-  createdAt             DateTime                 @default(now())
-  updatedAt             DateTime                 @updatedAt
+  id                   String               @id @default(uuid())
+  companyId            String
+  staffCadre           String[]             @default(["salesPerson"])
+  branchId             String
+  firstName            String               @db.VarChar(50)
+  middleName           String?              @db.VarChar(50)
+  lastName             String               @db.VarChar(50)
+  email                String               @unique @db.VarChar(50)
+  password             String               @db.VarChar(255)
+  supervisorId         String?
+  employmentDate       String?              @db.VarChar(50)
+  extraData            Json?
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  brandsAssigned       String[]
+  isActive             Boolean              @default(true)
+  receivedComments     Comment[]            @relation("Receiver")
+  sentComments         Comment[]            @relation("Sender")
+  contactPersons       ContactPerson[]
+  customers            Customer[]
+  branch               Branch               @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  company              Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  invoiceRequestForms  InvoiceRequestForm[]
+  MarkettingActivities MarkettingActivity[]
+  monthlyTargets       MonthlyTarget[]
+  pfiRequestForms      PfiRequestForm[]
+  visitReports         VisitReport[]
 }
-
-
 
 model Customer {
   id                  String               @id @default(uuid())
-  employee            Employee             @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId          String
   companyName         String               @db.VarChar(50)
   state               String?              @db.VarChar(50)
@@ -143,83 +140,73 @@ model Customer {
   industry            String?              @db.VarChar(50)
   customerType        String?              @db.VarChar(50)
   enquirySource       String?              @db.VarChar(50)
-  status              String?              
+  status              String?
   approved            Boolean              @default(false)
-  lastVisited         String?              
-  contactPersons      ContactPerson[]
-  visitReports        VisitReport[]
-  pfiRequestForms     PfiRequestForm[]
-  invoiceRequestForms InvoiceRequestForm[]
+  lastVisited         String?
   extraData           Json?
-  isActive            Boolean              @default(true)
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
+  isActive            Boolean              @default(true)
+  contactPersons      ContactPerson[]
+  employee            Employee             @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  invoiceRequestForms InvoiceRequestForm[]
+  pfiRequestForms     PfiRequestForm[]
+  visitReports        VisitReport[]
 }
 
 model ContactPerson {
   id                  String               @id @default(uuid())
-  employee            Employee             @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId          String
-  customer            Customer             @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId          String
-  name                String               @db.VarChar(50)
+  email               String?              @db.VarChar(50)
   designation         String?              @db.VarChar(50)
   phoneNumber         String               @db.VarChar(50)
-  email               String?              @db.VarChar(50)
-  visitReports        VisitReport[]
-  pfiRequestForms     PfiRequestForm[]
-  invoiceRequestForms InvoiceRequestForm[]
   extraData           Json?
-  isActive            Boolean              @default(true)
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
+  name                String               @db.VarChar(50)
+  isActive            Boolean              @default(true)
+  customer            Customer             @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  employee            Employee             @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  invoiceRequestForms InvoiceRequestForm[]
+  pfiRequestForms     PfiRequestForm[]
+  visitReports        VisitReport[]
 }
 
 model VisitReport {
-  id                  String                @id @default(uuid())
-  employee            Employee              @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  employeeId          String
-  customer            Customer              @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId          String
-  contactPerson       ContactPerson         @relation(fields: [contactPersonId], references: [id], onDelete: Cascade)
-  contactPersonId     String
-  callType            String?                @db.VarChar(50)
-  status              String                @db.VarChar(50)
-  productsDiscussed   String[]
-  quantity            String?               @db.VarChar(50)
-  durationOfMeeting   String                @db.VarChar(50)
-  meetingOutcome      String?               @db.VarChar(1000)
-  visitDate           String?
-  nextVisitDate       String?
-  followUpVisits      Json[]
-  pfiRequest          Boolean?              @default(false)
-  extraData           Json?
-  isActive            Boolean               @default(true)
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
+  id                String        @id @default(uuid())
+  employeeId        String
+  customerId        String
+  contactPersonId   String
+  callType          String?       @db.VarChar(50)
+  status            String        @db.VarChar(50)
+  quantity          String?       @db.VarChar(50)
+  durationOfMeeting String        @db.VarChar(50)
+  meetingOutcome    String?       @db.VarChar(1000)
+  visitDate         String?
+  pfiRequest        Boolean?      @default(false)
+  extraData         Json?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  followUpVisits    Json[]
+  productsDiscussed String[]
+  nextVisitDate     String?
+  isActive          Boolean       @default(true)
+  contactPerson     ContactPerson @relation(fields: [contactPersonId], references: [id], onDelete: Cascade)
+  customer          Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  employee          Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
-
-
 
 model PfiRequestForm {
   id                          String              @id @default(uuid())
-  employee                    Employee            @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId                  String
-  customer                    Customer?           @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId                  String?
-  contactPerson               ContactPerson?      @relation(fields: [contactPersonId], references: [id], onDelete: Cascade)
   contactPersonId             String?
-  customerType                String              
-  companyName                 String?             @db.VarChar(50)
-  companyAddress              String?             @db.VarChar(1000)
   contactPersonName           String?             @db.VarChar(50)
   phoneNumber                 String?             @db.VarChar(50)
   emailAddress                String?             @db.VarChar(50)
-  brand                       Brand               @relation(fields: [brandId], references: [id])
   brandId                     String
-  product                     Product             @relation(fields: [productId], references: [id])
   productId                   String
-  vehicleDetails              String?             @db.VarChar(1000)
   quantity                    String?
   pricePerVehicle             String?
   bodyTypeDescription         String?             @db.VarChar(1000)
@@ -231,44 +218,45 @@ model PfiRequestForm {
   whtDeduction                Boolean             @default(false)
   registration                Boolean             @default(false)
   refundRebateAmount          String?             @db.VarChar(50)
-  refundRebateRecipient       String?             @db.VarChar(50)
   designation                 String?             @db.VarChar(50)
   relationshipWithTransaction String?             @db.VarChar(255)
   estimatedOrderClosingTime   String?             @db.VarChar(50)
   paymentType                 String?             @db.VarChar(50)
   deliveryLocation            String?             @db.VarChar(1000)
+  vehicleDetails              String?             @db.VarChar(1000)
   approved                    Boolean             @default(false)
-  locked                      Boolean             @default(false)
   pfiReferenceNumber          String?
   pfiDate                     String?
   additionalInformation       String?             @db.VarChar(1000)
   extraData                   Json?
-  invoiceRequestForm          InvoiceRequestForm?
-  isActive                    Boolean             @default(true)
   createdAt                   DateTime            @default(now())
   updatedAt                   DateTime            @updatedAt
+  locked                      Boolean             @default(false)
+  companyAddress              String?             @db.VarChar(1000)
+  companyName                 String?             @db.VarChar(50)
+  customerType                String
+  refundRebateRecipient       String?             @db.VarChar(50)
+  isActive                    Boolean             @default(true)
+  invoiceRequestForm          InvoiceRequestForm?
+  brand                       Brand               @relation(fields: [brandId], references: [id])
+  contactPerson               ContactPerson?      @relation(fields: [contactPersonId], references: [id], onDelete: Cascade)
+  customer                    Customer?           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  employee                    Employee            @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  product                     Product             @relation(fields: [productId], references: [id])
 }
 
 model InvoiceRequestForm {
   id                          String         @id @default(uuid())
-  pfiRequestForm              PfiRequestForm @relation(fields: [pfiRequestFormId], references: [id], onDelete: Cascade)
   pfiRequestFormId            String         @unique
-  employee                    Employee       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId                  String
-  customer                    Customer?      @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId                  String?
-  contactPerson               ContactPerson? @relation(fields: [contactPersonId], references: [id], onDelete: Cascade)
   contactPersonId             String?
-  customerType                String?
   invoiceName                 String?        @db.VarChar(50)
   address                     String?        @db.VarChar(1000)
   contactOfficeTelephone      String?        @db.VarChar(50)
   emailAddress                String?        @db.VarChar(50)
   salesThru                   String?        @db.VarChar(50)
   industry                    String?        @db.VarChar(50)
-  brand                       Brand          @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  brandId                     String
-  product                     Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId                   String
   vehicleModelDetails         String?        @db.VarChar(1000)
   quantity                    String?        @db.VarChar(50)
@@ -308,14 +296,21 @@ model InvoiceRequestForm {
   approvedByProductHead       Boolean        @default(false)
   additionalInformation       String?
   extraData                   Json?
-  isActive                    Boolean        @default(true)
   createdAt                   DateTime       @default(now())
   updatedAt                   DateTime       @updatedAt
+  brandId                     String
+  customerType                String?
+  isActive                    Boolean        @default(true)
+  brand                       Brand          @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  contactPerson               ContactPerson? @relation(fields: [contactPersonId], references: [id], onDelete: Cascade)
+  customer                    Customer?      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  employee                    Employee       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  pfiRequestForm              PfiRequestForm @relation(fields: [pfiRequestFormId], references: [id], onDelete: Cascade)
+  product                     Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model MarkettingActivity {
   id           String   @id @default(uuid())
-  employee     Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId   String
   activityName String   @db.VarChar(50)
   activityDate String
@@ -323,60 +318,59 @@ model MarkettingActivity {
   location     String?
   objective    String?
   targetResult String?
-  briefReport  String?   @db.VarChar(1000)
-  images       String[]
-  costIncurred String?   @db.VarChar(50)
+  briefReport  String?  @db.VarChar(1000)
+  costIncurred String?  @db.VarChar(50)
   pdfDetails   String?  @db.VarChar(1000)
-  documents    String[]
   approved     Boolean? @default(false)
   extraData    Json?
-  isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  images       String[]
+  isActive     Boolean  @default(true)
+  documents    String[]
+  employee     Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
 
 model MonthlyTarget {
-  id            String   @id @default(uuid())
-  employee      Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  employeeId    String?
-  month         String   @db.VarChar(50)
-  target        String
-  extraData     Json?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id         String    @id @default(uuid())
+  month      String    @db.VarChar(50)
+  extraData  Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  target     String
+  isActive   Boolean   @default(true)
+  employeeId String?
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
   id          String   @id @default(uuid())
-  sender      Employee @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
   senderId    String
-  receiver    Employee @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
   receiverId  String
   resourceId  String?
   resourceUrl String?
   message     String?
   viewed      Boolean? @default(false)
   extraData   Json?
-  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+  receiver    Employee @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender      Employee @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
   id          String   @id @default(uuid())
   receiverId  String?
-  staffCadre  String?   
   resourceId  String?
   resourceUrl String?
-  title       String  @default("New Notification")
   message     String
   viewed      Boolean? @default(false)
-  viewedBy    String[] @default([])
   extraData   Json?
-  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  staffCadre  String?
+  title       String   @default("New Notification")
+  viewedBy    String[] @default([])
+  isActive    Boolean  @default(true)
 }
-
-

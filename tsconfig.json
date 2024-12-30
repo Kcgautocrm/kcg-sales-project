@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/notifications.js", "src/app/(auth)/login/login.js", "src/app/(auth)/login/page.js", "src/services/localStorageService.js", "src/app/(insidePages)/layout.js", "src/components/asideContent.jsx", "src/middleware.js", "src/app/api/v1/uploadImages/route.js", "src/app/(auth)/forgotPassword/forgotPassword.jsx", "src/app/(auth)/resetPassword/resetPassword.jsx", "src/app/(insidePages)/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/notifications.js", "src/app/(auth)/login/login.js", "src/app/(auth)/login/page.js", "src/services/localStorageService.js", "src/app/(insidePages)/layout.js", "src/components/asideContent.jsx", "src/middleware.js", "src/app/api/v1/uploadImages/route.js", "src/app/(auth)/forgotPassword/forgotPassword.jsx", "src/app/(auth)/resetPassword/resetPassword.jsx", "src/app/(insidePages)/page.jsx", "src/jsonScripts/scripts.ts"],
   "exclude": ["node_modules"]
 }

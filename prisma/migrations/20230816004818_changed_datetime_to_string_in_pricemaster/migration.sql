@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "PriceMaster" ALTER COLUMN "validFrom" SET DATA TYPE TEXT,
-ALTER COLUMN "validTill" SET DATA TYPE TEXT;

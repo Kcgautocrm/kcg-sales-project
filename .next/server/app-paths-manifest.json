@@ -1,4 +1,14 @@
 {
+  "/api/v1/notification/route": "app/api/v1/notification/route.js",
+  "/(insidePages)/customers/page": "app/(insidePages)/customers/page.js",
+  "/api/v1/employee/route": "app/api/v1/employee/route.js",
+  "/api/v1/customer/route": "app/api/v1/customer/route.js",
+  "/api/v1/contactPerson/route": "app/api/v1/contactPerson/route.js",
   "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
-  "/(insidePages)/pfiRequests/[id]/page": "app/(insidePages)/pfiRequests/[id]/page.js"
+  "/api/v1/brand/route": "app/api/v1/brand/route.js",
+  "/api/v1/product/route": "app/api/v1/product/route.js",
+  "/api/v1/pfiRequestForm/route": "app/api/v1/pfiRequestForm/route.js",
+  "/api/v1/dashboard/invoiceRequest/route": "app/api/v1/dashboard/invoiceRequest/route.js",
+  "/api/v1/dashboard/achievement/route": "app/api/v1/dashboard/achievement/route.js",
+  "/api/v1/dashboard/customerVisit/route": "app/api/v1/dashboard/customerVisit/route.js"
 }

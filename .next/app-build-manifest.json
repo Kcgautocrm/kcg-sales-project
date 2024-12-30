@@ -6,20 +6,25 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(insidePages)/pfiRequests/page": [
+    "/(insidePages)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/pfiRequests/page.js"
+      "static/chunks/app/(insidePages)/page.js"
     ],
     "/(insidePages)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
     ],
-    "/(insidePages)/pfiRequests/[id]/page": [
+    "/(insidePages)/customers/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/pfiRequests/[id]/page.js"
+      "static/chunks/app/(insidePages)/customers/page.js"
+    ],
+    "/(insidePages)/pfiRequests/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/pfiRequests/page.js"
     ]
   }
 }
