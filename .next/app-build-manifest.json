@@ -6,25 +6,45 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(insidePages)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/page.js"
-    ],
     "/(insidePages)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
     ],
-    "/(insidePages)/customers/page": [
+    "/(insidePages)/captureLocation/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/customers/page.js"
+      "static/chunks/app/(insidePages)/captureLocation/page.js"
+    ],
+    "/(insidePages)/verifiedLocations/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/verifiedLocations/page.js"
     ],
     "/(insidePages)/pfiRequests/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/pfiRequests/page.js"
+    ],
+    "/(insidePages)/verifiedLocations/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/verifiedLocations/[id]/page.js"
+    ],
+    "/(insidePages)/brands/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/brands/page.js"
+    ],
+    "/(insidePages)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/page.js"
+    ],
+    "/(insidePages)/products/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/products/page.js"
     ]
   }
 }

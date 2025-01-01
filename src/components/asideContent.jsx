@@ -49,6 +49,9 @@ const AsideContent = () => {
         <SidebarListItem route="/invoiceRequests" title="Invoice Requests" active={pathname.includes("/invoiceRequests")} iconClass="fa-solid fa-receipt" />
         <SidebarListItem route="/marketingActivities" title="Marketing Activities" active={pathname.includes("/marketingActivities")} iconClass="fa-solid fa-rocket" />
         <SidebarListItem route="/targetAchievements" title="Target & Achievements" active={pathname.includes("/targetAchievements")} iconClass="fa-solid fa-bullseye" />
+        <SidebarListItem route="/verifiedLocations" title="Verified Locations" active={pathname.includes("/verifiedLocations")} iconClass="fa-solid fa-location-dot" /> 
+
+        <SidebarListItem route="/captureLocation" classes="border border-success py-3 mt-3 text-success" title="Capture Location" active={pathname.includes("/captureLocation")} iconClass="fa-solid fa-location-crosshairs" />
       </ul>
     </nav>
   )

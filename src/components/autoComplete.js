@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { ClickAwayListener } from "@mui/material";
 
-const tempOptions = ["david", "daniel", "dicta", "daddy", "mummy", "aunty cc", "aunty labe", "bro chibueze", "de earnest", "aunt pricilla", "amara", "mrs chile", "koosi", "kamsi",]
-
 const styles = {
   dropdownMenu: {
     maxHeight: "200px",
@@ -21,9 +19,9 @@ const AppAutoComplete = ({options=[], handleClickOption, initialValue="", placeh
   const [showDropdownMenu, setShowDropdownMenu] = useState(false)
 
   useEffect(()=>{
-    console.log(initialValue)
+    console.log(options)
     setInput(initialValue)
-  },[initialValue])
+  },[initialValue, options])
 
   const listOptions = () =>{
     let eligibleOptions = options.filter( item => item?.label.toLowerCase().includes(input.toLowerCase()));
