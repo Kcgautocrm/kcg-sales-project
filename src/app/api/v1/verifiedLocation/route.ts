@@ -20,7 +20,6 @@ export async function GET(request: Request) {
       }); 
     }
 
-
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || "1");
     const take = parseInt(searchParams.get('take') || "");
@@ -94,8 +93,13 @@ export async function POST(request: Request) {
       }); 
     }
 
-    console.log("I received the request", json)
-
+    const apiKey = process.env.GOOGLE_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${json?.lattitude},${json?.longitude}&key=${apiKey}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    const address = result.results[0].formatted_address;
+    json.description = address;
+    
     const data = await prisma.verifiedLocations.create({
       data: json
     })

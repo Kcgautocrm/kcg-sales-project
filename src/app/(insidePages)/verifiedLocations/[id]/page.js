@@ -54,12 +54,11 @@ const LoadingFallBack = () =>{
 const VerifiedLocationDetails = () => {
   const params = useParams();
   const router = useRouter();
-  //const closeDeleteBrandModal = useRef();
   const {id} = params;
   const {userData} = useGetUserData();
   const dispatchMessage = useDispatchMessage();
 
-  const {data, isFetching, refetch: refetchBrandData} = useQuery({
+  const {data, isFetching, refetch: refetchVerifiedLocationsData} = useQuery({
     queryKey: ["allVerifiedLocations", id],
     queryFn: () => apiGet({ url: `/verifiedLocation/${id}`})
     .then(res =>{
@@ -79,8 +78,8 @@ const VerifiedLocationDetails = () => {
   return (
     <div className="container-fluid">
       <header className="d-flex align-items-center mb-4">
-        <h4 className="m-0">Brand</h4>
-        <span className="breadcrumb-item ms-3"><a href="/brands"><i className="fa-solid fa-arrow-left me-1"></i> Back</a></span>
+        <h4 className="m-0">Verified Locations</h4>
+        <span className="breadcrumb-item ms-3"><a href="/verifiedLocations"><i className="fa-solid fa-arrow-left me-1"></i> Back</a></span>
       </header>
 
 
