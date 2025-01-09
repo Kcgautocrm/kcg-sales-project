@@ -1,12 +1,15 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/(insidePages)/page": "app/(insidePages)/page.js",
   "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/(insidePages)/captureLocation/page": "app/(insidePages)/captureLocation/page.js",
-  "/api/v1/notification/route": "app/api/v1/notification/route.js",
-  "/api/v1/customer/route": "app/api/v1/customer/route.js",
-  "/api/v1/verifiedLocation/route": "app/api/v1/verifiedLocation/route.js",
-  "/(insidePages)/verifiedLocations/page": "app/(insidePages)/verifiedLocations/page.js",
+  "/(insidePages)/page": "app/(insidePages)/page.js",
+  "/(insidePages)/visits/page": "app/(insidePages)/visits/page.js",
+  "/api/v1/comment/route": "app/api/v1/comment/route.js",
   "/api/v1/employee/route": "app/api/v1/employee/route.js",
-  "/(insidePages)/verifiedLocations/[id]/page": "app/(insidePages)/verifiedLocations/[id]/page.js"
+  "/(insidePages)/pfiRequests/page": "app/(insidePages)/pfiRequests/page.js",
+  "/api/v1/customer/route": "app/api/v1/customer/route.js",
+  "/api/v1/contactPerson/route": "app/api/v1/contactPerson/route.js",
+  "/api/v1/brand/route": "app/api/v1/brand/route.js",
+  "/api/v1/product/route": "app/api/v1/product/route.js",
+  "/api/v1/pfiRequestForm/route": "app/api/v1/pfiRequestForm/route.js",
+  "/(insidePages)/visits/[id]/page": "app/(insidePages)/visits/[id]/page.js",
+  "/(insidePages)/pfiRequests/add/page": "app/(insidePages)/pfiRequests/add/page.js"
 }

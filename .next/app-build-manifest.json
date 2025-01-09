@@ -1,14 +1,14 @@
 {
   "pages": {
-    "/(insidePages)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/page.js"
-    ],
     "/(insidePages)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(insidePages)/layout.js"
+    ],
+    "/(insidePages)/employees/[id]/edit/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/employees/[id]/edit/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -21,20 +21,30 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/login/page.js"
     ],
-    "/(insidePages)/captureLocation/page": [
+    "/(insidePages)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/captureLocation/page.js"
+      "static/chunks/app/(insidePages)/page.js"
     ],
-    "/(insidePages)/verifiedLocations/page": [
+    "/(insidePages)/visits/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/verifiedLocations/page.js"
+      "static/chunks/app/(insidePages)/visits/page.js"
     ],
-    "/(insidePages)/verifiedLocations/[id]/page": [
+    "/(insidePages)/visits/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(insidePages)/verifiedLocations/[id]/page.js"
+      "static/chunks/app/(insidePages)/visits/[id]/page.js"
+    ],
+    "/(insidePages)/pfiRequests/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/pfiRequests/page.js"
+    ],
+    "/(insidePages)/pfiRequests/add/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(insidePages)/pfiRequests/add/page.js"
     ]
   }
 }

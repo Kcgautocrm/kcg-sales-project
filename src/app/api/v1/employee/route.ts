@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import authService from "@/services/authService";
-import { sendAccountCreationEmail } from "@/services/sendEmail";
+//import { sendAccountCreationEmail } from "@/services/sendEmail";
 
 
 let routeName = "Employee"
@@ -135,7 +135,7 @@ export async function POST(request: Request) {
     let payload = {...user, token}
 
     //send email
-    let info = await sendAccountCreationEmail({firstName: data.firstName, lastName: data.lastName, middleName: data?.middleName, email: data.email})
+    //let info = await sendAccountCreationEmail({firstName: data.firstName, lastName: data.lastName, middleName: data?.middleName, email: data.email})
     // return new user
     return new NextResponse(JSON.stringify({message: `Account Created Successfully. Email sent to employee`, data: payload}), {
       status: 201,

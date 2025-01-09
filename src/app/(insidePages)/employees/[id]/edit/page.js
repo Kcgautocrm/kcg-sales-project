@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import useDispatchMessage from "@/hooks/useDispatchMessage";
 import { useRouter } from "next/navigation";
 import formValidator from "@/services/validation";
+import { IconButton } from "@mui/material";
 
 
 
@@ -33,6 +34,7 @@ const EditEmployee = () => {
     isActive: true
   })
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const employeeDetailsQuery = useQuery({
     queryKey: ["allEmployees", id],
@@ -311,8 +313,11 @@ const EditEmployee = () => {
                   <span className='text-danger font-monospace small'>{errors.email}</span>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="password" className="form-label">Password (<span className='fst-italic text-warning'>required</span>)</label>
-                  <input type="password" className="form-control shadow-none" id="password" onChange={handleChange("password")} value={formData.password} placeholder="Enter your new password" />
+                  <label htmlFor="password" className="form-label d-flex align-items-center mb-0">
+                      <span>Password</span> (<span className='fst-italic text-warning'>required</span>)
+                      <IconButton className="ms-auto" onClick={()=>setShowPassword( prevState => !prevState)}>{showPassword ? <i className="fa-regular fa-eye" style={{fontSize: "16px"}}></i> : <i className="fa-regular fa-eye-slash small" style={{fontSize: "16px"}}></i> }</IconButton>
+                    </label>
+                  <input type={ showPassword ? "text" : "password"} className="form-control shadow-none" id="password" onChange={handleChange("password")} value={formData.password} placeholder="Enter your new password" />
                   <span className='text-danger font-monospace small'>{errors.password}</span>
                 </div>
                 <div className="mb-3">

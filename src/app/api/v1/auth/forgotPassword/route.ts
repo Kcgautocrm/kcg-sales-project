@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import * as jwt from 'jsonwebtoken';
-import {sendResetPasswordEmail} from "@/services/sendEmail";
+//import {sendResetPasswordEmail} from "@/services/sendEmail";
 
 export async function POST(request: Request) {
   try {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       }
     );
     //send email
-    await sendResetPasswordEmail({firstName: user.firstName, middleName: user?.middleName, lastName: user.lastName, email: user.email, token: token })
+    //await sendResetPasswordEmail({firstName: user.firstName, middleName: user?.middleName, lastName: user.lastName, email: user.email, token: token })
 
     return new NextResponse(JSON.stringify({message: `A Reset Password Link was sent to your email: ${user.email}`}), {
       status: 200,
