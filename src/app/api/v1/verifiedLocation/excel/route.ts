@@ -53,8 +53,8 @@ export async function GET(request: Request) {
         item.staffName = `${item?.employee?.firstName} ${item?.employee?.lastName}`;
         item.customer = item?.customer?.companyName;
         delete item?.extraData
-        delete item?.employee
-        delete item?.customer
+        delete item?.employeeId
+        delete item?.customerId
 
         const orderedObject = {
           'id': item?.id,

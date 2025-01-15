@@ -40,27 +40,27 @@ export async function GET(request: Request) {
         ...(state && { state }),
         ...(companyName && { companyName: { contains: companyName, mode: 'insensitive' } }),
       },
-        include: {
-            employee: {
-                select: {
-                    firstName: true,
-                    lastName: true
-                }
-            },
-            customer: {
-                select: {
-                    companyName: true,
-                }
-            },
-            contactPerson: {
-                select: {
-                    name: true,
-                }
-            }
-        },
-        orderBy: {
-          createdAt: "desc"
-        }
+      include: {
+          employee: {
+              select: {
+                  firstName: true,
+                  lastName: true
+              }
+          },
+          customer: {
+              select: {
+                  companyName: true,
+              }
+          },
+          contactPerson: {
+              select: {
+                  name: true,
+              }
+          }
+      },
+      orderBy: {
+        createdAt: "desc"
+      }
     })
     if(!data){
       return new NextResponse(JSON.stringify({ message: `Failed to fetch ${routeName} list`, data: null }), {
